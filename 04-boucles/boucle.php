@@ -88,22 +88,7 @@ function pgcd($nombre,$nombre2){
     Sinon, afficher le nombre
 */
 
-for ($i = 0; $i <= 100; $i++) {
-    if ($i % 3 == 0) {
-        echo ' Fizz <br \> ';
-    }elseif ($i % 5 == 0) {
-        echo ' Buzz <br \> ';
-    }elseif ($i % 15 == 0) {
-        echo ' FizzBuzz <br \> ';
-    }else {
-        echo $i . ' <br \> ';
-    }
-}
-
-    // fizzbuzz
-
     for ($i = 0; $i <= 100; $i+=1){
-        echo $i . "<br \>";
         if ($i % 3 ) {
             echo "Fizz" . "<br \>";
         }elseif ($i % 5) {
