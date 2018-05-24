@@ -40,3 +40,24 @@ for ($y = 0; $y < 6; $y++) {
     $size += 2; // On augmente le nombre d'étoiles pleine à afficher entre chaque ligne
     echo '<br />';
 }
+
+echo '<br /><br /> ------------------------------------ <br /><br />';
+/*
+Table de multiplication
+*/
+echo '<table border="1" style="border-collapse: collapse">';
+echo '<thead><tr>';
+echo '<th style="width: 30px; height: 30px">x</th>';
+for ($head = 0; $head < 11; $head++) {
+    echo '<th style="width: 30px; height: 30px">' . $head . '</th>';
+}
+echo '</tr></thead>';
+for ($ligne = 0; $ligne < 11; $ligne++) {
+    echo '<tr>';
+        echo '<td align="center" style="width: 30px; height: 30px"><strong>' . $ligne . '</strong></td>';
+        for ($colonne = 0; $colonne < 11; $colonne++) {
+            echo '<td align="center" style="width: 30px; height: 30px">' . $ligne * $colonne . '</td>';
+        }
+    echo '</tr>';
+}
+echo '</table>';
