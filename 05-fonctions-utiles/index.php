@@ -30,7 +30,12 @@ $t = strtotime('18 november 1991');
 echo date('l d/m/Y', $t);
 echo '<br />';
 
+// Formater correctement une date
 echo date('l d F Y, \i\l \e\s\t H\hi \e\t s \s\e\c\o\n\d\e\s');
 echo '<br />';
 
 echo date('l d F Y') . ', il est ' . date('H\hi \e\t s') . ' secondes';
+echo '<br />';
+
+// Trouver la date qu'il sera dans 10 jours par rapport à aujourd'hui
+echo 'Dans 10 jours, nous serons le ' . date('d / m / Y', strtotime('+10 days'));
