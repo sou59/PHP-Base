@@ -8,7 +8,7 @@ $people = [
     'Quelqu`un'
 ];
 
-echo $people; // Nez fonctionne pas, on ne pas afficher une tableau directement
+echo $people; // Ne fonctionne pas, on ne pas afficher une tableau directement
 echo '<b \>';
 
 echo '<pre>';
@@ -101,10 +101,10 @@ foreach($eleve as $person) { // première boucle avec tableau elèves
     echo $person['nom'] . ' a eu ';
     foreach ($person['notes'] as $key => $note){ // boucle interieur reprendre person
         echo $note;
-        // si la note est en vant dernier
+        // si la note est en avant dernière position
         if ($key == count($person['notes']) - 2){
             echo ', ';
-        // si la note est dernier on n'affiche rien
+        // si la note est en dernière position on n'affiche rien
         }else if ($key == count($person['notes']) - 1){
         echo '';
         }else {
@@ -173,9 +173,26 @@ foreach($eleve as $eleves) {
     }
 }
 
-echo "<p> qui a eu uamoins un 20, <br />
+echo "<p>Qui a eu au moins un 20, <br />
  triez les notes du tableau de chaque elève matthieu 1 2 3 4 5 : <p>";
+ foreach($eleve as $eleves) {
+    foreach ($eleves['notes'] as $note20) {
+        if ($note20 > 19) {
+            echo $eleves['nom'] . ' a une note d\'au moins : ' . $note20 . '<br />';
+            break;
+        }
+    }
+}
 
-
-
-
+echo "<p>Triez les notes du tableau de chaque elève matthieu 1 2 3 4 5 : <p>";
+foreach($eleve as $eleves) {
+    echo $eleves['nom'] . ' : ';
+    foreach ($eleves['notes'] as $key => $notesClasses) {
+        //echo 'avec ses notes triées par ordre croissant : ' . $notesClasses . '<br \>';
+        asort($notesClasses);
+        //foreach ($notesClasses ) {
+            echo $key = $notesClasses . "<br \>";
+       // }
+    }
+    echo "<br \>";
+}
