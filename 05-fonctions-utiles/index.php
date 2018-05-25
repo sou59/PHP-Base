@@ -28,6 +28,7 @@ echo date('l d  F  y', $now);
 echo "<p> Date 10 jours</p>";
 // le jour qu'il sera dans 10 jours
 // 10 jours = 
+
 $nextWeek = time() + (10 * 24 * 60 * 60);
                    // 10 days; 24 hours; 60 mins; 60 secs
 echo 'Now:       '. date('Y-m-d') ."<br \>";

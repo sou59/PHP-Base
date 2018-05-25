@@ -11,6 +11,7 @@
     Quand le nombre est un multiple de 15, afficher FizzBuzz.
     Sinon, afficher le nombre
 */
+<<<<<<< HEAD
 
 echo "<h2>Ecrire une boucle qui affiche les nombres de 10 à 1</h2>";
 for ($i = 10; $i > 0; $i--) {
@@ -77,6 +78,7 @@ echo pdgc1( 10,3 );
 echo "<p>2e possibilité :</p>";
 
 
+
 function GCD($num1, $num2) {
     /* finds the greatest common factor between two numbers */
        while ($num2 != 0){
@@ -96,6 +98,7 @@ function pgcd2($a,$b) {
 
 echo pgcd2( 12,21 );
 
+<<<<<<< HEAD
 
 echo "<p>4e possibilité :</p>";
 function pgcd($nombre,$nombre2){
@@ -135,6 +138,24 @@ function pgcd($nombre,$nombre2){
 }
 
 echo "<h2>Coder une boucle de 10 *, 10 ligne, faire un triangle </h2>";
+=======
+
+echo "<p>4e possibilité :</p>";
+function pgcd($nombre,$nombre2){
+    while($nombre>1){
+         $reste = $nombre%$nombre2;
+          if($reste == 0){
+         break; // sorti quand resultat trouvé
+         }
+          $nombre=$nombre2;
+         $nombre2=$reste;
+     }
+ return $nombre2; // retourne le resultat
+ }
+ 
+ echo pgcd( 120,420 );
+ // Affiche 60
+>>>>>>> 99546cacaed7a1f99cf1671bd96cef7ac5a643a9
 
 for ($y = 0; $y <= 10; $y++){
     for ($x = 0; $x < $y; $x++){
@@ -143,6 +164,7 @@ for ($y = 0; $y <= 10; $y++){
     echo '<br \>'; 
 }    
 
+<<<<<<< HEAD
 echo "<h2>Coder une boucle de 10 *, 10 ligne, faire un triangle TETE EN HAUT</h2>";
 
 for ($y = 0; $y < 10; $y++){
@@ -166,6 +188,24 @@ for ($y = 0; $y < 6; $y++){
                echo '⭐'; 
             }
              $x += $size - 1;
+=======
+ echo "<h2>Coder le jeu du FizzBuzz</h2>";
+ /*4. Coder le jeu du FizzBuzz
+    Parcourir les nombres de 0 à 100
+    Quand le nombre est un multiple de 3, afficher Fizz.
+    Quand le nombre est un multiple de 5, afficher Buzz.
+    Quand le nombre est un multiple de 15, afficher FizzBuzz.
+    Sinon, afficher le nombre
+*/
+
+    for ($i = 0; $i <= 100; $i+=1){
+        if ($i % 3 ) {
+            echo "Fizz" . "<br \>";
+        }elseif ($i % 5) {
+            echo "Buzz" . "<br \>";
+        }elseif ($i % 15) {
+            echo "FizzBuzz" . "<br \>";
+>>>>>>> 99546cacaed7a1f99cf1671bd96cef7ac5a643a9
         }else {
             echo '&nbsp;'; 
         }
@@ -201,3 +241,7 @@ echo '<table border="1" style="border-collapse: collapse">';
     }
 echo '</table>';
 
+<<<<<<< HEAD
+=======
+?>
+>>>>>>> 99546cacaed7a1f99cf1671bd96cef7ac5a643a9
