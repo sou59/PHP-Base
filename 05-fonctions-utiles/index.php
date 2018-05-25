@@ -23,7 +23,7 @@ echo "<p> Date du jour</p>";
 
 $now = strtotime('Wednesday 24 may 2018');
 
-echo date('l d  F  y', $now);
+echo date('l d  F  y', $now); // jour date mois annee
 
 echo "<p> Date 10 jours</p>";
 // le jour qu'il sera dans 10 jours
@@ -34,4 +34,4 @@ $nextWeek = time() + (10 * 24 * 60 * 60);
 echo 'Now:       '. date('Y-m-d') ."<br \>";
 echo 'Next Week: '. date('Y-m-d', $nextWeek) ."<br \>";
 
-
+echo 'Dans 10 jours, nous serons'
