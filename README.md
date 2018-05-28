@@ -1,5 +1,7 @@
 # PHP Base
 
+Slide : https://slides.com/matthieumota/php
+
 Pour travailler, vous avez besoin de forker ce dépôt.
 Ensuite, clonez votre dépôt sur votre machine.
 Créez une branche avec votre prénom.
