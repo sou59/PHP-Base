@@ -3,7 +3,7 @@
 $eleves = [
     0 => [
         'nom' => 'Matthieu',
-        'notes' => [10, 8, 16, 20, 17, 16, 15, 2]
+        'notes' => [20, 8, 16, 12, 17, 16, 15, 2]
     ],
     1 => [
         'nom' => 'Thomas',
@@ -15,7 +15,7 @@ $eleves = [
     ],
     3 => [
         'nom' => 'Enzo',
-        'notes' => [20, 14, 6, 20, 1, 8, 9]
+        'notes' => [9, 14, 6, 10, 1, 8, 2]
     ]
 ];
 
@@ -99,3 +99,41 @@ foreach ($eleves as $eleve) {
 /* 5/ Qui a eu au moins un 20 ?
 Exemple: Personne n'a eu 20
          Quelqu'un a eu 20 */
+$noteToCheck = 20;
+$noteIsCheck = false;
+foreach ($eleves as $eleve) {
+    foreach ($eleve['notes'] as $note) {
+        if ($note === $noteToCheck) {
+            $noteIsCheck = true;
+            // break; // Arrête le foreach
+            break 2; // Arrête les 2 foreach
+        }
+    }
+    var_dump($eleve); // Ne s'affiche pas avec le break 2
+}
+
+if ($noteIsCheck) {
+    echo 'Quelqu\'un a eu 20';
+} else {
+    echo 'Personne n\'a eu 20';
+}
+
+/* 6/ BONUS Tri à bulles 
+*/
+
+$notes = [4, 25, 1, 36, 24];
+$i = 0;
+$count = count($notes) - 1;
+var_dump($notes);
+
+while ($i < $count) { // On parcours tout le tableau
+    if ($notes[$i] > $notes[$i + 1]) { // Si la valeur suivante est supérieur à la valeur actuelle
+        $tmp = $notes[$i]; // On stocke le 4
+        $notes[$i] = $notes[$i + 1]; // On mets le 25 à la place du 4
+        $notes[$i + 1] = $tmp; // On mets le 4 à la place du 25
+        $i = 0;
+    } else {
+        $i++; // On incrémente le compteur seulement s'il n'y a pas d'échanges
+    }
+}
+var_dump($notes);
