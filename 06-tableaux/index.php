@@ -146,13 +146,13 @@ foreach($eleve as $eleves) { // première boucle avec tableau elèves
     $moyenne = round($moyenne, 2);
     if ($moyenne >= 10) {
         $countAverage++;
-        echo $eleves['nom'] . 'a la moyenne<br />';
+        echo $eleves['nom'] . ' a la moyenne<br />';
     }else {
-        echo $eleves['nom'] . 'n\a pas la moyenne<br />';
+        echo $eleves['nom'] . ' n\'a pas la moyenne<br />';
     }
 }
 
-echo "Nombre d'élèves avec la moyenne : " . $countAverage . '<br />';
+echo "Nombre d\'élèves avec la moyenne : " . $countAverage . '<br />';
 
 echo '<p> Elève avec la meilleure note <p>';
 $noteMax = 0;
@@ -173,26 +173,42 @@ foreach($eleve as $eleves) {
     }
 }
 
-echo "<p>Qui a eu au moins un 20, <br />
- triez les notes du tableau de chaque elève matthieu 1 2 3 4 5 : <p>";
+echo "<p>Qui a eu au moins un 20 :  <p>";
+ $notesToCheck = 20;
+ $notesIsCheck = true;
  foreach($eleve as $eleves) {
     foreach ($eleves['notes'] as $note20) {
-        if ($note20 > 19) {
-            echo $eleves['nom'] . ' a une note d\'au moins : ' . $note20 . '<br />';
-            break;
+        if ($note20 === $notesToCheck) {
+            $notesIsCheck = true;
+           // break; // arrête le foreach
+            break 2; // arrête le foreach
         }
     }
+    var_dump($eleve);
+}
+if ($notesIsCheck){
+    echo 'Quelqu\'un a eu 20';
+}else {
+    echo 'Personne n\'a eu 20';
 }
 
-echo "<p>Triez les notes du tableau de chaque elève matthieu 1 2 3 4 5 : <p>";
-foreach($eleve as $eleves) {
-    echo $eleves['nom'] . ' : ';
-    foreach ($eleves['notes'] as $key => $notesClasses) {
-        //echo 'avec ses notes triées par ordre croissant : ' . $notesClasses . '<br \>';
-        asort($notesClasses);
-        //foreach ($notesClasses ) {
-            echo $key = $notesClasses . "<br \>";
-       // }
+
+echo "<p>TRIE à Bulle <p>";
+$notes = [4, 25, 1, 36, 24];
+//pas de foreach car pas besoin de refaire le tour complet à chaque fois
+// dès qu'il y a un échange i revient à zéro et recommence
+$i = 0;
+$count = count($notes) - 1;
+var_dump($notes);
+while ($i < $count) { // on parcours tout le tableau;
+    if ($notes[$i] > $notes[$i + 1]) {// si la valeur suivante et supérieur à la valeur actuelle
+        $tmp = $notes[$i]; // on stocke le 4
+        $notes[$i] = $notes[$i + 1]; // on remplce 25 par 4
+        $notes[$i + 1] = $tmp; // on met le 4 à la place de 25
+        $i = 0;  // si il y a un échange on remet $i à zero
+    }else {
+        $i++; // on incrémente le compteur seulement s'il n'y a pas d'échange
     }
-    echo "<br \>";
 }
+var_dump($notes);
+
