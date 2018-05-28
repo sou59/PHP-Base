@@ -1,68 +1,66 @@
 <?php
 
-/*function hello($argument) {
-    return 'hello' . $argument;
+// .Pour créer une fonction en PHP
+// .Les arguments ne sont accessibles que dans la fonction
+// .Les arguments peuvent avoir une valeur par défaut et
+// dans ce cas, ne sont plus obligatoires
+function addition($cequonveut1 = 1, $argument2 = 2) {
+    // echo 10 + 3;
+    return $cequonveut1 + $argument2;
 }
-Pour créer une fonction en php
-*/
-
-// on peux avoir des valeurs d'arguments par défauts, dans l'appel les arguments ne sont plus obligatoire
-function addition($arguments1 = 1, $arguments2 = 2){
-   return $arguments1 + $arguments2; // pour la fonction pas d'écho l'appeler après
-}
-// echo addition(); 
-// on appelle la fonction
-
-//var_dump(addition(2,12));
-echo addition() . '<br \>';
-echo addition(2) . '<br \>';
-echo addition(2, 12) . '<br \>';
+// var_dump(addition(2, 12) + addition(4, 7)); // On appelle une fonction
+echo addition();
+echo addition(2);
+echo addition(2, 12);
 
 echo 'Fonction carre----------------------------------<br \>';
 
-function carre($x){
-    //return $x * $x;
-    return $x ** 2;
+function square($number) {
+    // $number * $number;
+    return $number ** 2;
 }
-echo 'Carré de : ' . carre(7) . '<br \>';
+echo square(5); // 25
+echo '<br />';
+echo square(10); // 100
+echo '<br />';
+echo square(7); // 49
+echo '<br />';
 
 echo 'Fonction  aire d\'un cercle----------------------<br \>';
 //L'aire d'un cercle = rayon au carré multiplié par π (environ 3,14)
-function aireCercle($radius){
-    $pi = 3.14;
-    return $radius * $radius * M_PI; // ou M_PI
+function circleArea($radius) {
+    return $radius * $radius * M_PI;
 }
-echo 'Aire d\'un cercle  de 10 de rayon : ' . aireCercle(10) . '<br \>';
+echo circleArea(10); // 314.15
+echo '<br />';
 
 echo 'Fonction  d\'un rectangle----------------------<br \>';
-    function rectangle($length, $width){
-        return $length * $width;
-    }
-
-echo 'Aire d\'un rectangle  de 7 * 6  : ' . rectangle(7, 6) . '<br \>';   
+function rectArea($length, $width) {
+    return $length * $width;
+}
+echo rectArea(10, 5); // 50
+echo '<br />';
 
 
 echo 'Fonction  calcul TVA d\'un prix ((ht TTC, tx tva)2 arguments)----------------------<br \>';
 // dans les deux sens ht -> TTC et de TTC --> HT
 
-    function convertHtToTtc($price, $rate) {
-        return $price * (1 + $rate / 100);
-    }
-
-echo convertHtToTtc(10, 20) . '<br \>';
-
-// false : ttc vers ht
-// true ht vers ttc
+function convertHtToTtc($price, $rate) {
+    return $price * (1 + $rate / 100);
+}
+echo convertHtToTtc(10, 20);
+echo '<br />';
 
 echo 'Fonction  calcul HT / TTC dans les deux sens 3 arguments : prix, taux, taxes = true----------------------<br \>';
+// False : TTC vers HT
+// True : HT vers TTC
 function convert($price, $rate, $taxes = true) {
-    if ($taxes){
-        return $price * (1 + $rate / 100);
+    if ($taxes) {
+        return $price * (1 + $rate / 100); // La fonction s'arrête au return
     }
     return $price / (1 + $rate / 100);
 }
-
-echo convert(10, 20) . '<br \>';
-
-echo convert(12, 20, false) . '<br \>';
-
+echo convert(10, 20);
+echo '<br />';
+echo convert(12, 20, false);
+echo '<br />';

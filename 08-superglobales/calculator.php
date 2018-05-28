@@ -34,40 +34,37 @@ echo "Ajouter un champ radio ou select permettant de choisir l'opération (+, -,
 
 echo "<br \>";
 
-
-if (!empty($_POST)) {
+// ne jamais utiliser eval("echo shell_exec...")!!!!
+if (!empty($_POST)) { // Savoir si le formulaire a été soumis
     $operator = $_POST['operator'];
     $nombre1 = $_POST['nombre1'];
     $nombre2 = $_POST['nombre2'];
     $resultat = 0;
-// ne jamais utiliser eval("echo shell_exec...")!!!!
-// si nbre1 ou nbr2 ne sont pas des nombres valides
-    if (!is_numeric($nombre1)  || !is_numeric($nombre2)) {
-        echo "Les nombres saisies ne sont pas valides";
-        exit(); // on arrête le script
+    // Si nombre1 ou nombre2 ne sont pas des nombres valides
+    if (!is_numeric($nombre1) || !is_numeric($nombre2)) {
+        echo 'Les nombres saisis ne sont pas valides';
+        exit(); // On arrête le script
     }
+    // Si le nombre2 est égal à zéro, on ne peut pas faire le calcul
     if ($nombre2 == 0 && $operator == '/') {
-        echo "Attention division par zero impossible";
-        exit(); // on arrête le script
+        echo 'Attention, division par zéro.';
+        exit();
     }
-
     switch ($operator) {
-        case '+': 
+        case '+':
             $resultat = $nombre1 + $nombre2;
-            break;
-        case '-': 
+        break;
+        case '-':
             $resultat = $nombre1 - $nombre2;
-            break;
-        case '/': 
+        break;
+        case '/':
             $resultat = $nombre1 / $nombre2;
-            break;
-        case '*': 
-        $resultat = $nombre1 * $nombre2;
-        break;            
+        break;
+        case '*':
+            $resultat = $nombre1 * $nombre2;
+        break;
     }
     echo $resultat;
 }
-
 var_dump($_POST);
-
 

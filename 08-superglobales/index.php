@@ -14,7 +14,14 @@ if (isset($_GET['id'])) { // Vérifie que id soit vbien présent dans l'url
 
 // récupérer le paramètre name dans l'url (index.php?name=titi)
 // et l'afficher sur al apgae --> 'Hello titi"
+?>
+<ul>
+    <li><a href="index.php?name=toto">Toto</a></li>
+    <li><a href="index.php?name=titi">Titi</a></li>
+    <li><a href="index.php?name=tata">Tata</a></li>
+</ul>
 
+<?php
 if (isset($_GET['name'])) {
     $name = $_GET['name'];
     echo 'Hello ' . $name;

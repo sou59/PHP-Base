@@ -7,66 +7,54 @@
     echo "Le message doit faire au minimum 15 caractères<br \>";
     echo "---------------------------------------------<br \>";
 
-    $email = null;
-    $sujet = null;
-    $message = null;
-
-if (!empty($_POST)) { //1er chose si le tableau n'est pas vide, est soumis
+// On déclare les variables pour éviter les erreurs
+$email = null;
+$subject = null;
+$message = null;
+if (!empty($_POST)) { // Récupére les informations saisies dans le formulaire
     $email = $_POST['email'];
-    $sujet = $_POST['sujet'];
+    $subject = $_POST['subject'];
     $message = $_POST['message'];
-}
-?>
+} ?>
+
 <form method="POST">
     <div>
-    <label for="email">Email : </label>
-    <input type="text" name="email" id="email" value="<?php echo $email; ?>" placeholder="Saisir votre email" />
-    </div>
-    <br \>
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" value="<?php echo $email; ?>" />
+    </div><br />
     <div>
-    <label for="sujet">Sujet : </label>
-    <input type="text" name="sujet" id="sujet" value="<?php echo $sujet; ?>"  placeholder="Saisir votre sujet" />
-    </div><br \>
+        <label for="subject">Sujet</label>
+        <input type="text" name="subject" id="subject" value="<?php echo $subject; ?>" />
+    </div><br />
     <div>
-    <label for="message">Message : </label>
-    <textarea name="message" value="<?php echo $message; ?>" id="message" placeholder="Saisir votre message" /></textarea>
-    </div><br \>
-    <p>
-    <button id="button">Envoyer</button></p>
+        <label for="message">Message</label>
+        <textarea name="message" id="message"><?php echo $message; ?></textarea>
+    </div><br />
+
+    <button>Envoyer</button>
 </form>
 
 <?php
-
-
-//var_dump(filter_var('matthieur'));
-if (!empty($_POST)) { //1er chose si le tableau n'est pas vide, est soumis
-
+var_dump(filter_var('matthieu@a.fr', FILTER_VALIDATE_EMAIL));
+if (!empty($_POST)) { // Si le formulaire est soumis
     $isValid = true;
-
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) { // ou avec !
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // Vérifie si l'email est valide
         $isValid = false;
-        echo "Vous mail n'ai pas valide<br \>";
-        exit();
+        echo 'L\'email n\'est pas valide. <br />';
     }
-    if (empty($sujet)) {
+    // Ou strlen($subject) == 0
+    if (empty($subject)) {
         $isValid = false;
-        echo "Vous devez remplir le champs sujet <br \>";
-        exit();
+        echo 'Le sujet ne doit pas être vide. <br />';
     }
     if (strlen($message) < 15) {
         $isValid = false;
-        echo "Le message est trop court <br \>";
-        exit();
+        echo 'Le message est trop court.';
     }
-
     if ($isValid) {
-        echo "Le message a bien été envoyé <br \>";
+        echo 'Le formulaire a été envoyé.';
     }
+    /*if (filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($subject) && strlen($message) >= 15) {
+        echo 'Le formulaire a été envoyé.';
+    }*/
 }
-
-
-
-
-
-
-

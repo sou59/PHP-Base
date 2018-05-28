@@ -1,77 +1,16 @@
 <?php
 
-$people = [
-    'Jean', 
-    'Eric', 
-    'Jeanne',
-    'John',
-    'Quelqu`un'
-];
-
-echo $people; // Ne fonctionne pas, on ne pas afficher une tableau directement
-echo '<b \>';
-
-echo '<pre>';
-print_r($people); // c'est mieux pour faire un debug
-echo '<pre>';
-
-
-var_dump($people); // Débug du tableau
-
-echo $people[1]; // reponse Eric
-
-echo "<p>Taleaux simple FOREACH</p>";
-// affiche tous les noms du tableaux
-
-foreach($people as $index => $person) {
-    echo $index . ' : ' . $person . '<br \>';
+$notesDeJean = $eleves[2]['notes'];
+$totalNotes = 0;
+foreach ($notesDeJean as $note) {
+    $totalNotes += $note;
 }
-
-// si un index est déclarée les éléments suivants vont être autoincrémenter à l'index suivant
-$people = [
-    'Jean', 
-    3 =>'Eric', 
-    'Jeanne'
-];
-
-var_dump($people);
-
-//Eric sera à l'index 3 et du coup jeanne index 4
-
-echo "<p>Taleaux</p>";
-
-// 
-$people = [
-    [
-        'nom' => 'Motta' ,
-        'prenom' => 'Matthieu',
-        'age' => 10,
-        'telephone' => [
-            'portable' => '06.02.03.05',
-            'fixe' => '03.20.30.25'
-        ],
-    ],
-    [
-        'nom' => 'Marcel' ,
-        'prenom' => 'Bertrand',
-        'age' => 25,
-        'telephone' => [
-            'portable' => '06.02.03.05',
-            'fixe' => '03.20.30.25'
-        ]
-    ]
-
-];
-var_dump($people);
-
-foreach($people as $person) {
-    echo $person['prenom'] . ' a ' . $person['age'] . ' ans et est joingnable au ';
-    echo $person['telephone']['portable'] . ', ' . $person['telephone']['fixe'] . '<br \>';
-     
-     foreach($person['telephone'] as $type => $phone) {
-        echo $type . ' - ' . $phone . ', ';
-    }
-}   echo '<br \>';
+// $totalNotes = array_sum($notesDeJean);
+$moyenne = $totalNotes / count($notesDeJean);
+$moyenne = round($moyenne, 2);
+var_dump($totalNotes);
+var_dump($moyenne);
+echo 'La moyenne de Jean est de ' . $moyenne . ' / 20<br /><br />';
 
 
 echo '<p> EXERCICE tableau élève<p>';
@@ -116,41 +55,37 @@ foreach($eleve as $person) { // première boucle avec tableau elèves
 
 echo '<p> Calculer la moyenne de Jean : $eleve[2][notes] : <p>';
 
-$notesDeJean = $eleve[2]['notes'];
+$notesDeJean = $eleves[2]['notes'];
 $totalNotes = 0;
-
-foreach ($notesDeJean as $notes){
+foreach ($notesDeJean as $note) {
     $totalNotes += $note;
 }
-
-// $somme = array_sum($eleve[2]['notes']);
-// echo "<br \>";
-// $taille = count($eleve[2]['notes']);
-// echo "<br \>";
-
-// echo "La moyenne de Jean est de : " . $somme / $taille;
-// echo "<br \>";
-
+// $totalNotes = array_sum($notesDeJean);
 $moyenne = $totalNotes / count($notesDeJean);
 $moyenne = round($moyenne, 2);
 var_dump($totalNotes);
 var_dump($moyenne);
-echo 'La moyenne de Jean est de ' . $moyenne . ' /20<br \>';
+echo 'La moyenne de Jean est de ' . $moyenne . ' / 20<br /><br />';
 
 echo "<p> Combien d\'élèves ont la moyenne : <p>";
 
+Exemple :
+Matthieu a la moyenne
+Jean n'a pas la moyenne
+Thomas a la moyenne
+Nombre d'éléves avec la moyenne : 2 */
 $countAverage = 0;
-echo 'Mathieu  la moyenne de : ';
-foreach($eleve as $eleves) { // première boucle avec tableau elèves
-    $moyenne = array_sum($eleves['notes']) / count($eleves['notes']);
+foreach ($eleves as $eleve) { //première boucle
+    $moyenne = array_sum($eleve['notes']) / count($eleve['notes']);
     $moyenne = round($moyenne, 2);
     if ($moyenne >= 10) {
-        $countAverage++;
-        echo $eleves['nom'] . ' a la moyenne<br />';
-    }else {
-        echo $eleves['nom'] . ' n\'a pas la moyenne<br />';
+        $countAverage++; // Permet de compter le nombre d'élèves ayant la moyenne
+        echo $eleve['nom'] .' a la moyenne<br />';
+    } else {
+        echo $eleve['nom'] .' n\'a pas la moyenne<br />';
     }
 }
+
 
 echo "Nombre d\'élèves avec la moyenne : " . $countAverage . '<br />';
 
@@ -166,6 +101,7 @@ foreach($eleve as $eleves) {
 var_dump($noteMax);
 foreach($eleve as $eleves) {
     foreach ($eleves['notes'] as $note) {
+        // Si l'élève a dans sa liste de notes, la meilleure note
         if ($note === $noteMax) {
             echo $eleves['nom'] . ' a la meilleur note : ' . $noteMax . '<br />';
             break;
@@ -184,7 +120,7 @@ echo "<p>Qui a eu au moins un 20 :  <p>";
             break 2; // arrête le foreach
         }
     }
-    var_dump($eleve);
+    var_dump($eleve); // Ne s'affiche pas avec le break 2
 }
 if ($notesIsCheck){
     echo 'Quelqu\'un a eu 20';
