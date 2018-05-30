@@ -37,7 +37,7 @@ echo acronym('PHP: Hypertext Preprocessor').'<br />'; // PHP
 
 echo "--------------------------------<br \>";
 
-echo "Conjugaison : Créer une fonction qui permet de conjuguer un verbe (chercher par exemple). Cela doit renvoyer toutes les conjugaisons au présent.<br \>"
+echo "Conjugaison : Créer une fonction qui permet de conjuguer un verbe (chercher par exemple). Cela doit renvoyer toutes les conjugaisons au présent.<br \>";
 
 function conjugate($verb) {
     $root = substr($verb, 0, -2); // Racine
