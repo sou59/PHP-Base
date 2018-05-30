@@ -4,7 +4,7 @@
 
 var_dump($_GET);
 
-if (isset($_GET['id'])) { // Vérifie que id soit vbien présent dans l'url
+if (isset($_GET['id'])) { // Vérifie que id soit bien présent dans l'url
     $id = $_GET['id']; // on peur récupérer un id dans l'url
     if ($id == 5) {
         echo 'utilisateur 5';
