@@ -1,6 +1,8 @@
 -- CECI N'EST QU'UN SUPPORT POUR LE COURS
 -- Commentaire en SQL
 -- On insère une catégorie
+-- On peut mettre les colonnes entre ``
+-- et les valeurs entre ''
 INSERT INTO category (`name`) VALUES ('Film de gangsters');
 
 -- On insère plusieurs catégories
