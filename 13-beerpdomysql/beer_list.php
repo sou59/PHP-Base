@@ -1,47 +1,36 @@
 <?php 
 require(__DIR__.'/partials/header.php');
 
-// récupérer les liste des bières
-$query = $db->query("SELECT * FROM beer");
-
-// resultats
+// Récupérer la liste des bières
+// Requête
+$query = $db->query('SELECT * FROM beer');
+// Résultat
 $beers = $query->fetchAll();
-
-
 ?>
 
-<!-- contenu de la page -->
-
+<!-- Le contenu de la page -->
 <div class="container pt-5">
-    <h1> La liste des bières</h1>
+    <h1>La liste des bières</h1>
     <div class="row">
         <?php
-        // on affiche la liste des bières
+        // On affiche la liste des bières
         foreach ($beers as $beer) {
-            echo "<div class='col-md-4'>";
-                echo "<div class='card md-4'>";
-                    echo '<img class="beer-img d-block m-auto card-image-top" src ="'.$beer['image'].'"/>';
-                        echo "<div class='card-body'>";
-                         echo $beer['name'];
-                         // bouton
-                         echo '<a href="beer_single.php?id="' . $beer['id'] . 'class="btn btn-primary">En savoir plus sur ' . $beer['name'] . '</a>';
-                        echo '</div>';
-                echo '</div><br \>';
+            echo '<div class="col-md-3">';
+                echo '<div class="card mb-4">';
+                    echo '<img class="beer-img d-block m-auto card-img-top" src="'.$beer['image'].'" />';
+                    echo '<div class="card-body">';
+                        echo $beer['name'];
+                        // Ajouter un bouton (a href) "Voir la bière"
+                        // Quand on clique sur le bouton, on doit se rendre sur la page beer_single.php
+                        // Créer la page beer_single.php
+                        // Il faudrait que l'URL ressemble à beer_single.php?id=IDDELABIERE
+                        echo '<a href="beer_single.php?id='.$beer['id'].'" class="btn btn-primary btn-block">Voir la bière</a>';
+                    echo '</div>';
+                echo '</div>';
             echo '</div>';
-        }
-        ?>
+        } ?>
     </div>
 </div>
-
-<div >
-<br \>
-</div> 
-<div >
-<br \>
-
-</div> 
-<br \>
-<br \>
 
 
 <?php 
