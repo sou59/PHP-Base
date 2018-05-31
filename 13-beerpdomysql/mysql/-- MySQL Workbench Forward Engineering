@@ -1,0 +1,122 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema beer_pdo
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema beer_pdo
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `beer_pdo` DEFAULT CHARACTER SET utf8 ;
+USE `beer_pdo` ;
+
+-- -----------------------------------------------------
+-- Table `beer_pdo`.`ebc`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `beer_pdo`.`ebc` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `code` INT NULL,
+  `color` VARCHAR(6) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `beer_pdo`.`brewery`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `beer_pdo`.`brewery` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NULL,
+  `adress` VARCHAR(255) NULL,
+  `city` VARCHAR(255) NULL,
+  `zip` VARCHAR(45) NULL,
+  `country` VARCHAR(255) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `beer_pdo`.`brand`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `beer_pdo`.`brand` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NULL,
+  `brewery_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_brand_brewery1_idx` (`brewery_id` ASC),
+  CONSTRAINT `fk_brand_brewery1`
+    FOREIGN KEY (`brewery_id`)
+    REFERENCES `beer_pdo`.`brewery` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `beer_pdo`.`beer`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `beer_pdo`.`beer` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NULL,
+  `degree` FLOAT(3,1) NULL,
+  `volum` INT NULL,
+  `image` VARCHAR(255) NULL,
+  `price` FLOAT(8,2) NULL,
+  `ebc_id` INT NOT NULL,
+  `brand_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_beer_ebc_idx` (`ebc_id` ASC),
+  INDEX `fk_beer_brand1_idx` (`brand_id` ASC),
+  CONSTRAINT `fk_beer_ebc`
+    FOREIGN KEY (`ebc_id`)
+    REFERENCES `beer_pdo`.`ebc` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_beer_brand1`
+    FOREIGN KEY (`brand_id`)
+    REFERENCES `beer_pdo`.`brand` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `beer_pdo`.`note`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `beer_pdo`.`note` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `note` INT NULL,
+  `comment` LONGTEXT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `beer_pdo`.`beer_note`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `beer_pdo`.`beer_note` (
+  `note_id` INT NOT NULL,
+  `beer_id` INT NOT NULL,
+  PRIMARY KEY (`note_id`, `beer_id`),
+  INDEX `fk_note_has_beer_beer1_idx` (`beer_id` ASC),
+  INDEX `fk_note_has_beer_note1_idx` (`note_id` ASC),
+  CONSTRAINT `fk_note_has_beer_note1`
+    FOREIGN KEY (`note_id`)
+    REFERENCES `beer_pdo`.`note` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_note_has_beer_beer1`
+    FOREIGN KEY (`beer_id`)
+    REFERENCES `beer_pdo`.`beer` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
