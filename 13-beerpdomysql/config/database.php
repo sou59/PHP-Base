@@ -11,6 +11,7 @@ define('DB', 'beer_pdo');
 try { // Essaye le code
     $db = new PDO('mysql:host='.HOST.';dbname='.DB.';charset=utf8', USER, PASS, [
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING, // Active les erreurs SQL
     ]);
 } catch (Exception $e) { // Si le code renvoie une erreur, fais quelque chose
     echo $e->getMessage(); // On récupére le message de l'exception
