@@ -13,6 +13,7 @@ require(__DIR__.'/../config/database.php');
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <title>Hello, world!</title>
   </head>
