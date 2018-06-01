@@ -163,7 +163,10 @@ require('partials/header.php'); ?>
                 $query->bindValue(':brand_id', $brand_id, PDO::PARAM_INT);
                 $query->bindValue(':ebc_id', $type_id, PDO::PARAM_INT);
 
-                $query->execute(); // On insère la bière dans la BDD
+                if ($query->execute()) { // On insère la bière dans la BDD
+                    echo '<div class="alert alert-success">La bière a bien été ajouté.</div>';
+                }
+
             }
         }
         // Vérifier les champs
