@@ -59,15 +59,15 @@ require('partials/header.php'); ?>
             <label for="volum">Volume :</label>
             <select class="form-control" id="volum" name="volum">
                 <option hidden value="">Choisissez votre volume</option>
-                <option value="250">25cl</option>
-                <option value="330">33cl</option>
-                <option value="750">75cl</option>
+                <option <?php if ($volum == 250) { echo 'selected'; } ?> value="250">25cl</option>
+                <option <?php echo ($volum == 330) ? 'selected' : ''; ?> value="330">33cl</option>
+                <option <?php if ($volum == 750) { echo 'selected'; } ?> value="750">75cl</option>
             </select>
         </div>
 
         <div class="form-group">
             <label for="brand">Marque :</label>
-            <input type="text" id="brand" list="brands" name="brand" class="form-control">
+            <input type="text" id="brand" list="brands" name="brand" class="form-control" value="<?php echo $brand; ?>">
             <datalist id="brands">
                 <select>
                     <option value="Chimay - 1"></option>
@@ -81,7 +81,7 @@ require('partials/header.php'); ?>
 
         <div class="form-group">
             <label for="type">Type :</label>
-            <input type="text" id="type" list="types" name="type" class="form-control">
+            <input type="text" id="type" list="types" name="type" class="form-control" value="<?php echo $type; ?>">
             <datalist id="types">
                 <select>
                     <option value="Blonde - 1"></option>
@@ -109,10 +109,62 @@ require('partials/header.php'); ?>
 
             // $degree doit faire entre 0 et 20
             if (!is_numeric($degree) || $degree < 0 || $degree > 20) {
-                $errors['degree'] = 'Le degrès n\'est pas valide'; // équivaut à array_push($errors, 'Le degrès n\'est pas valide');
+                $errors['degree'] = 'Le degrès n\'est pas valide';
+            }
+
+            // $price doit faire entre 0.01 et 99.99
+            if (!is_numeric($price) || $price < 0.01 || $price > 99.99) {
+                $errors['price'] = 'Le prix n\'est pas valide';
+            }
+
+            // $volum doit faire 250, 330 ou 750
+            if (!in_array($volum, [250, 330, 750])) {
+                $errors['volum'] = 'Le volume n\'est pas valide';
+            }
+
+            // Vérifier que la marque existe
+            $brand_id = intval(substr($brand, -1)); // "Duvel - 2" -> "2"
+
+            // Requête pour aller chercher la marque en BDD
+            $query = $db->prepare('SELECT * FROM brand WHERE id = :id');
+            $query->bindValue(':id', $brand_id, PDO::PARAM_INT);
+            $query->execute();
+            $brand = $query->fetch();
+
+            if (!$brand) { // Si la marque n'existe pas en BDD
+                $errors['brand'] = 'La marque n\'existe pas';
+            }
+
+            // Vérifier que le type existe
+            $type_id = intval(substr($type, -1)); // "Brune - 2" -> "2"
+
+            // Requête pour aller chercher le type ebc en BDD
+            $query = $db->prepare('SELECT * FROM ebc WHERE id = :id');
+            $query->bindValue(':id', $type_id, PDO::PARAM_INT);
+            $query->execute();
+            $type = $query->fetch();
+
+            if (!$type) { // Si le type n'existe pas en BDD
+                $errors['type'] = 'Le type n\'existe pas';
             }
 
             var_dump($errors);
+
+            // S'il n'y a pas d'erreurs dans le formulaire
+            if (empty($errors)) {
+                $query = $db->prepare('
+                    INSERT INTO beer (`name`, degree, volum, `image`, price, brand_id, ebc_id) VALUES (:name, :degree, :volum, :image, :price, :brand_id, :ebc_id)
+                ');
+                $query->bindValue(':name', $name, PDO::PARAM_STR);
+                $query->bindValue(':degree', $degree, PDO::PARAM_STR);
+                $query->bindValue(':volum', $volum, PDO::PARAM_INT);
+                $query->bindValue(':image', 'img/chimay-chimay-rouge.jpg', PDO::PARAM_STR);
+                $query->bindValue(':price', $price, PDO::PARAM_STR);
+                $query->bindValue(':brand_id', $brand_id, PDO::PARAM_INT);
+                $query->bindValue(':ebc_id', $type_id, PDO::PARAM_INT);
+
+                $query->execute(); // On insère la bière dans la BDD
+            }
         }
         // Vérifier les champs
         var_dump($_POST);
