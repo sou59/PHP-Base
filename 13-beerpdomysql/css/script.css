@@ -27,27 +27,23 @@
   max-width: 40rem;
 }
 
+.logo {
+  width: 50px;
+}
+
+.box-shadow {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 .beer-img {
   width: 120px;
   height: 120px;
   margin: 20px auto;
-
 }
+
 .card-body {
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  border-top: 1px solid rgba(0,0,0,.125);
 }
-
-.box-shadow{
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.formulaire {
-  text-align: left;
-}
-
-/* Formulaire
--------------------------------------------------- */
-
 
 /* Sticky footer styles
 -------------------------------------------------- */

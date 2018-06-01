@@ -27,7 +27,6 @@ $beers = $query->fetchAll();
                         // Créer la page beer_single.php
                         // Il faudrait que l'URL ressemble à beer_single.php?id=IDDELABIERE
                         echo '<a href="beer_single.php?id='.$beer['id'].'" class="btn btn-primary btn-block">Voir la bière</a>';
-                        echo '</p>';
                     echo '</div>';
                 echo '</div>';
             echo '</div>';

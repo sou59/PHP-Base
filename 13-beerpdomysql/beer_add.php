@@ -20,7 +20,8 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
 <div class="container pt-5">
     <h1>Ajouter une bière</h1>
     <?php
-    // creer les variables avant de formulaire pour le formulaire se vide
+     // On définis les variables pour éviter des "Notices" quand on les affichera dans le formulaire
+     $name = null;
 
     $name = null;
     $degree = null;
@@ -30,7 +31,8 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
     $type = null;
 
     //var_dump($_SERVER);
-            // détecter quand le formulaire est soumis
+
+    // détecter quand le formulaire est soumis
     if (!empty($_POST)) { // Si le formulaire est soumis
         $name = $_POST['name'];
         $degree = $_POST['degree'];
@@ -39,7 +41,7 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
         $brand = $_POST['brand'];
         $type = $_POST['type'];
 
-            // raccourcie avec l'interpolation des variables
+        // raccourcie avec l'interpolation des variables
         foreach ($_POST as $key => $field) {
             // ${'name"} = $field
             $$key = $field;
@@ -97,87 +99,94 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
 
         <button class="btn btn-primary">Ajouter</button>
     </form>
-</div>
 
 <?php 
     
-        if (!empty($_POST)) {
+    // Détecter quand le formulaire est soumis
+    // On peut aussi utilise $_SERVER
+    if (!empty($_POST)) {
         // définir un tableau d'erreur vide qui va se remplir après chaque erreur
         $errors = [];
-        
-        if (strlen($name) < 3) {
-            $errors['name'] = "Le nom n\'est pas valide";
-        }
-        if (!is_numeric($degree) || $degree < 0.01 || $degree > 20) {
-            $errors['degree'] = "Degrée n\'est pas valide";
-        }
-        if (!is_numeric($price) || $price < 0.01 || $price > 99.99 ) {
-            $errors['price'] = "Price n\'est pas valide";
-        }
-
-        if (!in_array($volum, [250, 330, 750])) {
-            $errors['volum'] = "Volume n\'est pas valide";
-        }
-        // if ($volum !== 250 || $volum !== 330 || $volum !== 750) {
-        //     $errors['volum'] = "Volume n\'est pas valide";
-        // }
-
-        // Vérifie que la marque existe
-        $brand_id = intval(substr($brand, -1));
-        var_dump($brand_id);
-
-        // requête prépare
-        $query = $db->prepare('SELECT * FROM brand WHERE id = :id');
-        $query->bindValue(':id', $brand_id, PDO::PARAM_INT);
-        $query->execute();
-        $brand = $query->fetch();
-        var_dump($brand);
-
-        if (!$brand) {
-            $errors['brand'] = "La marque n\'est pas valide";
-        }
-
-        $type_id = intval(substr($type, -1));
-        var_dump($type_id);
-
-        // requête prépare
-        $query = $db->prepare('SELECT * FROM ebc WHERE id= :id');
-        $query->bindValue(':id', $type_id, PDO::PARAM_INT);
-        $query->execute();
-        $type = $query->fetch();
-        var_dump($type);
-
-        if (!$type) {
-            $errors['type'] = "Le type n\'est pas valide";
-        }
-
-        var_dump($errors);
-
-        // S'il n'y a pas d'erreur
-        if (empty($errors)) {
-
-            $query = $db->prepare('
-                INSERT INTO beer (`name`, degree, volum, `image`, price, brand_id, ebc_id)
-                VALUES (:name, :degree, :volum, :image, :price, :brand_id, :ebc_id)');
-
-            $query->bindValue(':name', $name, PDO::PARAM_STR);
-            $query->bindValue(':degree', $degree, PDO::PARAM_STR);
-            $query->bindValue(':volum', $name, PDO::PARAM_INT);
-            $query->bindValue(':image', 'img/chimay-chimay-rouge.jpg', PDO::PARAM_STR);
-            $query->bindValue(':price', $price, PDO::PARAM_STR);
-            $query->bindValue(':brand_id', $brand_id, PDO::PARAM_INT);
-            $query->bindValue(':ebc_id', $type_id, PDO::PARAM_INT);
-            
-            if ($query->execute()) { // on sinsère la bière dans la bdd
-                echo '<div class="alerte alert-sucess">La bière a bien été ajoutée</div>';
+            // $name doit faire au moins 3 caractères
+            if (strlen($name) < 3) {
+                $errors['name'] = "Le nom n\'est pas valide";
             }
 
-        //var_dump($errors);
-    }
+            // $degree doit faire entre 0 et 20
+            if (!is_numeric($degree) || $degree < 0.01 || $degree > 20) {
+                $errors['degree'] = "Degrée n\'est pas valide";
+            }
+
+            // $price doit faire entre 0.01 et 99.99
+            if (!is_numeric($price) || $price < 0.01 || $price > 99.99 ) {
+                $errors['price'] = "Price n\'est pas valide";
+            }
+
+            // $volum doit faire 250, 330 ou 750
+            if (!in_array($volum, [250, 330, 750])) {
+                $errors['volum'] = "Volume n\'est pas valide";
+            }
+            // if ($volum !== 250 || $volum !== 330 || $volum !== 750) {
+            //     $errors['volum'] = "Volume n\'est pas valide";
+            // }
+
+            // Vérifie que la marque existe
+            $brand_id = intval(substr($brand, -1));
+            
+            // Requête pour aller chercher la marque en BDD
+            $query = $db->prepare('SELECT * FROM brand WHERE id = :id');
+            $query->bindValue(':id', $brand_id, PDO::PARAM_INT);
+            $query->execute();
+            $brand = $query->fetch();
+
+            if (!$brand) {  // Si la marque n'existe pas en BDD
+                $errors['brand'] = "La marque n\'est pas valide";
+            }
+
+            // Vérifier que le type existe
+            $type_id = intval(substr($type, -1));  // "Brune - 2" -> "2"
+
+            // Requête pour aller chercher le type ebc en BDD
+            $query = $db->prepare('SELECT * FROM ebc WHERE id= :id');
+            $query->bindValue(':id', $type_id, PDO::PARAM_INT);
+            $query->execute();
+            $type = $query->fetch();
+            //var_dump($type);
+
+            // Si le type n'existe pas en BDD
+            if (!$type) {
+                $errors['type'] = "Le type n\'est pas valide";
+            }
+
+            var_dump($errors);
+
+            // S'il n'y a pas d'erreurs dans le formulaire
+            if (empty($errors)) {
+
+                $query = $db->prepare('
+                    INSERT INTO beer (`name`, degree, volum, `image`, price, brand_id, ebc_id)
+                    VALUES (:name, :degree, :volum, :image, :price, :brand_id, :ebc_id)');
+
+                $query->bindValue(':name', $name, PDO::PARAM_STR);
+                $query->bindValue(':degree', $degree, PDO::PARAM_STR);
+                $query->bindValue(':volum', $name, PDO::PARAM_INT);
+                $query->bindValue(':image', 'img/chimay-chimay-rouge.jpg', PDO::PARAM_STR);
+                $query->bindValue(':price', $price, PDO::PARAM_STR);
+                $query->bindValue(':brand_id', $brand_id, PDO::PARAM_INT);
+                $query->bindValue(':ebc_id', $type_id, PDO::PARAM_INT);
+                
+                if ($query->execute()) { // On insère la bière dans la BDD
+                    echo '<div class="alerte alert-sucess">La bière a bien été ajoutée</div>';
+                }
+
+            }
+        }
+    // Vérifier les champs
     var_dump($_POST);
 
-?>
+    ?>
 
+</div>
 
 <?php 
 require(__DIR__.'/partials/footer.php');
