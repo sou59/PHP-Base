@@ -130,7 +130,6 @@ require('partials/header.php'); ?>
             $query->bindValue(':id', $brand_id, PDO::PARAM_INT);
             $query->execute();
             $brand = $query->fetch();
-            var_dump($brand);
 
             if (!$brand) { // Si la marque n'existe pas en BDD
                 $errors['brand'] = 'La marque n\'existe pas';
@@ -144,13 +143,28 @@ require('partials/header.php'); ?>
             $query->bindValue(':id', $type_id, PDO::PARAM_INT);
             $query->execute();
             $type = $query->fetch();
-            var_dump($type);
 
             if (!$type) { // Si le type n'existe pas en BDD
                 $errors['type'] = 'Le type n\'existe pas';
             }
 
             var_dump($errors);
+
+            // S'il n'y a pas d'erreurs dans le formulaire
+            if (empty($errors)) {
+                $query = $db->prepare('
+                    INSERT INTO beer (`name`, degree, volum, `image`, price, brand_id, ebc_id) VALUES (:name, :degree, :volum, :image, :price, :brand_id, :ebc_id)
+                ');
+                $query->bindValue(':name', $name, PDO::PARAM_STR);
+                $query->bindValue(':degree', $degree, PDO::PARAM_STR);
+                $query->bindValue(':volum', $volum, PDO::PARAM_INT);
+                $query->bindValue(':image', 'img/chimay-chimay-rouge.jpg', PDO::PARAM_STR);
+                $query->bindValue(':price', $price, PDO::PARAM_STR);
+                $query->bindValue(':brand_id', $brand_id, PDO::PARAM_INT);
+                $query->bindValue(':ebc_id', $type_id, PDO::PARAM_INT);
+
+                $query->execute(); // On insère la bière dans la BDD
+            }
         }
         // Vérifier les champs
         var_dump($_POST);
