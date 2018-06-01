@@ -11,3 +11,19 @@ Au niveau du PHP, nous aurons besoin de créer plusieurs fichiers :
 - index.php -> Page d'accueil du site
 - beer_list.php -> Lister toutes les bières de la BDD
 - beer_single.php -> La page d'une bière seule
+
+## Ajout d'une bière
+
+- Créer la page beer_add.php
+- Ne pas oublier d'inclure le header et le footer
+- Ajouter un titre "Ajouter une bière"
+- Ajouter un formulaire avec les champs suivants :
+    - Nom : Champ saisie libre
+    - Degrès : Champ saisie libre ou range
+    - Volume : Champ select
+    - Prix : Champ saisie libre
+    - Marque : Champ select ou autocompletion (datalist)
+    - Type : Champ select ou autocompletion (datalist)
+- Ne pas oublier le bouton pour soumettre le formulaire
+- Ne pas oublier la méthode du formulaire
+- Lorsque le formulaire est soumis, il faudra récupérer la valeur de chacun des champs
