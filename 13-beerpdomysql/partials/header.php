@@ -28,7 +28,7 @@ require(__DIR__.'/../config/database.php');
   <header>
           <!-- Fixed navbar -->
           <nav class="navbar navbar-expand-md navbar-dark  bg-dark">
-            <a class="navbar-brand pl-auto" href="#"><img src="img/beer.png" width="10%"> Beer PDO</a>
+            <a class="navbar-brand pl-auto" href="index.php"><img src="img/beer.png" width="10%"> Beer PDO</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>

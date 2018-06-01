@@ -27,21 +27,27 @@
   max-width: 40rem;
 }
 
-/* footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
-footer p {
-  margin-bottom: .25rem;
-} */
-
-.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
-
 .beer-img {
-  width: 70px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
+  margin: 20px auto;
+
 }
+.card-body {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.box-shadow{
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.formulaire {
+  text-align: left;
+}
+
+/* Formulaire
+-------------------------------------------------- */
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -73,4 +79,5 @@ footer p {
   max-width: 680px;
   padding: 0 15px;
 } 
+
 
