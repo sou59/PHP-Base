@@ -33,14 +33,15 @@ require(__DIR__.'/../config/database.php');
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
+              <?php $page = basename($_SERVER['REQUEST_URI'], '.php');  ?>
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
+                <li class="nav-item active <?php echo ($page == 'index') ? 'active' : '' ?>">
                   <a class="nav-link" href="index.php">Accueil <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item <?php echo ($page == 'beer_list') ? 'active' : '' ?>">
                   <a class="nav-link" href="beer_list.php">Les bières</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item <?php echo ($page == 'beer_add') ? 'active' : '' ?>">
                   <a class="nav-link" href="beer_add.php">Ajouter une bières</a>
                 </li>
               </ul>
@@ -50,4 +51,12 @@ require(__DIR__.'/../config/database.php');
               </form>
             </div>
           </nav>
+
+  <?php
+  $page = basename($_SERVER['REQUEST_URI'], '.php');
+  // affiche : C:\xampp\htdocs\PHP-Base\13-beerpdomysql\partials\header.php:55:string '/PHP-Base/13-beerpdomysql/beer_list.php' (length=39)
+  // selon page 
+  //basename('/PHP-Base/13-beerpdomysql/beer_list.php');
+  ?>
+  
   </header>
