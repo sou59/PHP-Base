@@ -21,7 +21,10 @@ require(__DIR__.'/../config/database.php');
     <!-- Le menu -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">Beer PDO</a>
+            <a class="navbar-brand" href="index.php">
+                <img class="logo" src="img/logo.png" alt="Beer PDO">
+                Beer PDO
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
