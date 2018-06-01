@@ -30,10 +30,9 @@ require('partials/header.php'); ?>
 
         <div class="form-group">
             <label for="brand">Marque :</label>
-            <input type="text" id="brand1" list="brand" name="brand" class="form-control">
-            <datalist id="brand">
+            <input type="text" id="brand" list="brands" name="brand" class="form-control">
+            <datalist id="brands">
                 <select>
-                    <option hidden value="">Choisissez votre marque</option>
                     <option value="Chimay - 1"></option>
                     <option value="Duvel - 2"></option>
                     <option value="Kwak - 3"></option>
@@ -45,10 +44,9 @@ require('partials/header.php'); ?>
 
         <div class="form-group">
             <label for="type">Type :</label>
-            <input type="text" id="type1" list="type" name="type" class="form-control">
-            <datalist id="type">
+            <input type="text" id="type" list="types" name="type" class="form-control">
+            <datalist id="types">
                 <select>
-                    <option hidden value="">Choisissez votre type</option>
                     <option value="Blonde - 1"></option>
                     <option value="Brune - 2"></option>
                     <option value="Ambrée - 3"></option>
