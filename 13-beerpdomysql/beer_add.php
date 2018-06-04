@@ -29,6 +29,7 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
     $volum = null;
     $brand = null;
     $type = null;
+    $image = null;
 
     //var_dump($_SERVER);
 
@@ -40,6 +41,7 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
         $volum = $_POST['volum'];
         $brand = $_POST['brand'];
         $type = $_POST['type'];
+        //$image = $_FILES['image'];
 
         // raccourcie avec l'interpolation des variables
         foreach ($_POST as $key => $field) {
@@ -47,91 +49,11 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
             $$key = $field;
         }
     }
+        if (!empty($_FILES['image']['tmp_name'])) {
+           $image = $_FILES['image'];
+        }
 
-    ?>
-    <!-- L'attribut enctype doit absolument être "multipart/form-data",
-    et la méthode doit être POST -->
-    
-    <form method="POST" enctype="multipart/form-data" action="">
-        <?php
-        $fields = ['name' => 'Nom', 'degree' => 'Degrès', 'price' => 'Prix']; // Les champs du formulaire à afficher
-        foreach ($fields as $field => $label) { ?>
-            <div class="form-group">
-                <label for="<?php echo $field; ?>"><?php echo $label; ?> :</label>
-                <input type="text" name="<?php echo $field; ?>" id="<?php echo $field; ?>" class="form-control" value="<?php echo $$field; ?>">
-            </div>
-        <?php } ?>
-
-        <div class="form-group">
-            <label for="volum">Volume :</label>
-            <select class="form-control" id="volum" name="volum">
-                <option hidden value="">Choisissez votre volume</option>
-                <option <?php echo ($volum == 250) ? 'selected' : '';?> value="250">25cl</option>
-                <option <?php if ($volum == 330) { echo 'selected';} ?> value="330">33cl</option>
-                <option <?php if ($volum == 750) { echo 'selected';} ?> value="750">75cl</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="brand">Marque :</label>
-            <input type="text" id="brand1" list="brand" name="brand" class="form-control" value="<?php echo $brand; ?>">
-            <datalist id="brand">
-                <select>
-                    <option value="Chimay - 1"></option>
-                    <option value="Duvel - 2"></option>
-                    <option value="Kwak - 3"></option>
-                    <option value="Guinness - 4"></option>
-                    <option value="Ch'ti - 5"></option>
-                </select>
-            </datalist>
-        </div>
-
-        <div class="form-group">
-            <label for="type">Type :</label>
-            <input type="text" id="type1" list="type" name="type" class="form-control" value="<?php echo $type; ?>" >
-            <datalist id="type">
-                <select>
-                    <option value="Blonde - 1"></option>
-                    <option value="Brune - 2"></option>
-                    <option value="Ambrée - 3"></option>
-                    <option value="Noire - 4"></option>
-                </select>
-            </datalist>
-        </div>
-        <!-- La balise input type="file" permet de
-        sélectionner un fichier sur son ordinateur.
-        Ne pas oublier l'attribut "name"-->
-        <div class="form-group">
-            <label for="image">Type :</label>
-        <input type="file" name="image" />
-        </div>
-
-        <button class="btn btn-primary">Ajouter</button>
-    </form>
-
-<?php 
-
-    // Permet de transformer/slugifier un nom
-    // Exemple : le Ch'ti Ambrée -> chti-ambree
-    function slugify($string) {
-        
-        $newString = str_replace(' ', '-', $string);
-        $newString = str_replace('\'', '', $newString);
-        $newString = str_replace([
-                'à','á','â','ã','ä', 'ç', 'è','é','ê','ë', 'ì','í','î','ï', 'ñ',
-                'ò','ó','ô','õ','ö', 'ù','ú','û','ü', 'ý','ÿ', 'À','Á','Â','Ã',
-                'Ä','Ç', 'È','É','Ê','Ë', 'Ì','Í','Î','Ï', 'Ñ', 'Ò','Ó','Ô','Õ',
-                'Ö', 'Ù','Ú','Û','Ü', 'Ý'], ['a','a','a','a','a', 'c', 'e','e','e','e', 'i','i','i','i', 'n',
-                'o','o','o','o','o', 'u','u','u','u', 'y','y', 'A','A','A','A','A',
-                'C','E','E','E','E', 'I','I','I','I', 'N', 'O','O','O','O','O',
-                'U','U','U','U', 'Y'], $newString);
-        $newString = strtolower($newString);   
-        
-        return $newString;
-    }
-    
-    var_dump(slugify('Ch\'ti Ambrée'));
-    // Détecter quand le formulaire est soumis
+        // Détecter quand le formulaire est soumis
     // On peut aussi utilise $_SERVER
     if (!empty($_POST)) {
         // définir un tableau d'erreur vide qui va se remplir après chaque erreur
@@ -187,6 +109,33 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
                 $errors['type'] = "Le type n\'est pas valide";
             }
 
+
+            // vérification du type d'image
+            //erreur si pas d'image uploade
+            if ($image === null) {
+                $errors['image'] = "Vous avez oublier d'uploder une image";
+            }
+
+            // erreur si l'image n'a pas le bon mimetype
+            //finfo_file()
+            if ($image) {
+                $file = $image['tmp_name']; // emplacement temporaire du fichier
+                $finfo = finfo_open(FILEINFO_MIME_TYPE); // permet d'ouvrir un fichier 
+                $mimeType = finfo_file($finfo, $file); // ouvre le fichier et renvoie image/jpg
+                // Dans la variable suivante, je définis les extention autorisées
+                $allowedExtension = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+                if(!in_array($mimeType, $allowedExtension)){
+                    $errors['image'] = "Ce type de fichier n\'est pas autorisé";
+                }
+
+                // si le taille de l'image est- trop elevé
+                // size en octet 1 o = 1024 
+                if ($image['size'] > 2097152) {
+                    $errors['image'] = "le fichier est trop lourd";
+                }
+            }
+            
+
             var_dump($errors);
 
             // S'il n'y a pas d'erreurs dans le formulaire
@@ -211,7 +160,7 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
 
                     // Récupère l'extension du fichier
                     $originalName = $_FILES['image']['name'];
-                    $extension = pathinfo('$originalName')['extension']; // retourne jpg pu png
+                    $extension = pathinfo($originalName)['extension']; // retourne jpg pu png
 
                     // Générer le nom de l'image
                     // Ch'ti -> chti
@@ -221,24 +170,113 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
  
                     $filename = $brand.'-'.$name.'.'.$extension;
                     var_dump($filename);
-                    // // Renomme le fichier
-                    // $md5 = md5($originalName.uniqid());
-                    // $filename = $md5.'.'.$extension;
 
-                    // Déplace le fichier vers un répertoire
-                    move_uploaded_file($file, __DIR__.'/upload/'.$filename);
-                                     
+                    // Déplace le fichier vers un répertoire img
+                    move_uploaded_file($file, __DIR__.'/img/'.$filename);
+
+                    $query = $db->prepare('UPDATE beer SET `image` = :image WHERE id = :id');
+                    $query->bindValue(':image', 'img/'.$filename, PDO::PARAM_STR);
+                    $query->bindValue(':id', $db->lastInsertId(), PDO::PARAM_INT);
+                    $query->execute();                   
                     
                     echo '<div class="alerte alert-sucess">La bière a bien été ajoutée</div>';
                 }
             }
            
         }
+    
+
+    ?>
+    <!-- L'attribut enctype doit absolument être "multipart/form-data",
+    et la méthode doit être POST -->
+    <form method="POST" action="" enctype="multipart/form-data">
+    <?php
+    
+        $fields = ['name' => 'Nom', 'degree' => 'Degrès', 'price' => 'Prix']; // Les champs du formulaire à afficher
+        foreach ($fields as $field => $label) { ?>
+            <div class="form-group">
+                <label for="<?php echo $field; ?>"><?php echo $label; ?> :</label>
+                <input type="text" name="<?php echo $field; ?>" id="<?php echo $field; ?>" class="form-control <?php echo isset($errors[$field]) ? 'is-invalid' : null; ?>" value="<?php echo $$field; ?>">
+                <?php if (isset($errors[$field])) {
+                    echo '<div class="invalid-feedback">';
+                        echo $errors[$field];
+                    echo '</div>';
+                } ?>
+            </div>
+        <?php } ?>
+
+        <div class="form-group">
+            <label for="volum">Volume :</label>
+            <select class="form-control" id="volum" name="volum">
+                <option hidden value="">Choisissez votre volume</option>
+                <option <?php if ($volum == 250) { echo 'selected'; } ?> value="250">25cl</option>
+                <option <?php echo ($volum == 330) ? 'selected' : ''; ?> value="330">33cl</option>
+                <option <?php if ($volum == 750) { echo 'selected'; } ?> value="750">75cl</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="brand">Marque :</label>
+            <input type="text" id="brand" list="brands" name="brand" class="form-control" value="<?php echo $brand; ?>">
+            <datalist id="brands">
+                <select>
+                    <option value="Chimay - 1"></option>
+                    <option value="Duvel - 2"></option>
+                    <option value="Kwak - 3"></option>
+                    <option value="Guinness - 4"></option>
+                    <option value="Ch'ti - 5"></option>
+                </select>
+            </datalist>
+        </div>
+
+        <div class="form-group">
+            <label for="type">Type :</label>
+            <input type="text" id="type" list="types" name="type" class="form-control" value="<?php echo $type; ?>">
+            <datalist id="types">
+                <select>
+                    <option value="Blonde - 1"></option>
+                    <option value="Brune - 2"></option>
+                    <option value="Ambrée - 3"></option>
+                    <option value="Noire - 4"></option>
+                </select>
+            </datalist>
+        </div>
+
+        <!-- La balise input type="file" permet de
+        sélectionner un fichier sur son ordinateur.
+        Ne pas oublier l'attribut "name"-->
+        <div class="form-group">
+            <label for="image">Type :</label>
+        <input type="file" name="image" />
+        </div>
+
+        <button class="btn btn-primary">Ajouter</button>
+    </form>
+
+<?php 
+
+    // Permet de transformer/slugifier un nom
+    // Exemple : le Ch'ti Ambrée -> chti-ambree
+    function slugify($string) {
+        
+        $newString = str_replace(' ', '-', $string);
+        $newString = str_replace('\'', '', $newString);
+        $newString = str_replace(['à','á','â','ã','ä', 'ç', 'è','é','ê','ë', 'ì','í','î','ï', 'ñ',
+                'ò','ó','ô','õ','ö', 'ù','ú','û','ü', 'ý','ÿ', 'À','Á','Â','Ã',
+                'Ä','Ç', 'È','É','Ê','Ë', 'Ì','Í','Î','Ï', 'Ñ', 'Ò','Ó','Ô','Õ',
+                'Ö', 'Ù','Ú','Û','Ü', 'Ý'], ['a','a','a','a','a', 'c', 'e','e','e','e', 'i','i','i','i', 'n',
+                'o','o','o','o','o', 'u','u','u','u', 'y','y', 'A','A','A','A','A',
+                'C','E','E','E','E', 'I','I','I','I', 'N', 'O','O','O','O','O',
+                'U','U','U','U', 'Y'], $newString);
+        $newString = strtolower($newString);   
+        
+        return $newString;
+    }
+    
     // Débug du formulaire
     var_dump($_POST);
     // Débug de l'upload
     var_dump($_FILES);
-
     ?>
 
 </div>

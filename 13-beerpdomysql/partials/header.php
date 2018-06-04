@@ -43,6 +43,12 @@ require(__DIR__.'/../config/database.php');
                 </li>
             </ul>
         </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form method="GET" action="search.php" class="form-inline ml-auto">
+            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>    
         
         <?php //var_dump(basename($_SERVER['REQUEST_URI'], '.php')); ?>
     </nav>
