@@ -44,6 +44,6 @@ require(__DIR__.'/../config/database.php');
             </ul>
         </div>
         
-        <?php var_dump(basename($_SERVER['REQUEST_URI'], '.php')); ?>
+        <?php //var_dump(basename($_SERVER['REQUEST_URI'], '.php')); ?>
     </nav>
 </header>

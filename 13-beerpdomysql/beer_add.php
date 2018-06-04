@@ -49,8 +49,10 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
     }
 
     ?>
-
-    <form method="POST" action="">
+    <!-- L'attribut enctype doit absolument être "multipart/form-data",
+    et la méthode doit être POST -->
+    
+    <form method="POST" enctype="multipart/form-data" action="">
         <?php
         $fields = ['name' => 'Nom', 'degree' => 'Degrès', 'price' => 'Prix']; // Les champs du formulaire à afficher
         foreach ($fields as $field => $label) { ?>
@@ -96,12 +98,39 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
                 </select>
             </datalist>
         </div>
+        <!-- La balise input type="file" permet de
+        sélectionner un fichier sur son ordinateur.
+        Ne pas oublier l'attribut "name"-->
+        <div class="form-group">
+            <label for="image">Type :</label>
+        <input type="file" name="image" />
+        </div>
 
         <button class="btn btn-primary">Ajouter</button>
     </form>
 
 <?php 
+
+    // Permet de transformer/slugifier un nom
+    // Exemple : le Ch'ti Ambrée -> chti-ambree
+    function slugify($string) {
+        
+        $newString = str_replace(' ', '-', $string);
+        $newString = str_replace('\'', '', $newString);
+        $newString = str_replace([
+                'à','á','â','ã','ä', 'ç', 'è','é','ê','ë', 'ì','í','î','ï', 'ñ',
+                'ò','ó','ô','õ','ö', 'ù','ú','û','ü', 'ý','ÿ', 'À','Á','Â','Ã',
+                'Ä','Ç', 'È','É','Ê','Ë', 'Ì','Í','Î','Ï', 'Ñ', 'Ò','Ó','Ô','Õ',
+                'Ö', 'Ù','Ú','Û','Ü', 'Ý'], ['a','a','a','a','a', 'c', 'e','e','e','e', 'i','i','i','i', 'n',
+                'o','o','o','o','o', 'u','u','u','u', 'y','y', 'A','A','A','A','A',
+                'C','E','E','E','E', 'I','I','I','I', 'N', 'O','O','O','O','O',
+                'U','U','U','U', 'Y'], $newString);
+        $newString = strtolower($newString);   
+        
+        return $newString;
+    }
     
+    var_dump(slugify('Ch\'ti Ambrée'));
     // Détecter quand le formulaire est soumis
     // On peut aussi utilise $_SERVER
     if (!empty($_POST)) {
@@ -170,19 +199,45 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
                 $query->bindValue(':name', $name, PDO::PARAM_STR);
                 $query->bindValue(':degree', $degree, PDO::PARAM_STR);
                 $query->bindValue(':volum', $name, PDO::PARAM_INT);
-                $query->bindValue(':image', 'img/chimay-chimay-rouge.jpg', PDO::PARAM_STR);
+                // laisser le champs adrees image vide car on doit récupérer l'extension du fichier uploader
+                $query->bindValue(':image', null, PDO::PARAM_STR);
                 $query->bindValue(':price', $price, PDO::PARAM_STR);
                 $query->bindValue(':brand_id', $brand_id, PDO::PARAM_INT);
                 $query->bindValue(':ebc_id', $type_id, PDO::PARAM_INT);
                 
                 if ($query->execute()) { // On insère la bière dans la BDD
+                    // Retourne l'emplacement temporaire du fichier
+                    $file = $_FILES['image']['tmp_name'];
+
+                    // Récupère l'extension du fichier
+                    $originalName = $_FILES['image']['name'];
+                    $extension = pathinfo('$originalName')['extension']; // retourne jpg pu png
+
+                    // Générer le nom de l'image
+                    // Ch'ti -> chti
+                    // ch'ti Ambrée -> chti-ambrée
+                    $brand = slugify($brand['name']);
+                    $name = slugify($name);
+ 
+                    $filename = $brand.'-'.$name.'.'.$extension;
+                    var_dump($filename);
+                    // // Renomme le fichier
+                    // $md5 = md5($originalName.uniqid());
+                    // $filename = $md5.'.'.$extension;
+
+                    // // Déplace le fichier vers un répertoire
+                    // move_uploaded_file($file, __DIR__.'/upload/'.$filename);
+                                     
+                    
                     echo '<div class="alerte alert-sucess">La bière a bien été ajoutée</div>';
                 }
-
             }
+           
         }
-    // Vérifier les champs
+    // Débug du formulaire
     var_dump($_POST);
+    // Débug de l'upload
+    var_dump($_FILES);
 
     ?>
 
