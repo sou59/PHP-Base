@@ -201,7 +201,12 @@ require('partials/header.php'); ?>
                     $brand = slugify($brand['name']);
                     $name = slugify($name);
                     $filename = $brand.'-'.$name.'.'.$extension;
-                    var_dump($filename);
+                    
+                    // Déplacer le fichier dans le dossier img
+                    move_uploaded_file($file, __DIR__.'/img/'.$filename);
+
+                    // Requête pour mettre à jour la bière en BDD afin d'associer l'image
+                    
 
                     echo '<div class="alert alert-success">La bière a bien été ajouté.</div>';
                 }
