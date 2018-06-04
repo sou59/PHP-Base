@@ -225,8 +225,8 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
                     // $md5 = md5($originalName.uniqid());
                     // $filename = $md5.'.'.$extension;
 
-                    // // Déplace le fichier vers un répertoire
-                    // move_uploaded_file($file, __DIR__.'/upload/'.$filename);
+                    // Déplace le fichier vers un répertoire
+                    move_uploaded_file($file, __DIR__.'/upload/'.$filename);
                                      
                     
                     echo '<div class="alerte alert-sucess">La bière a bien été ajoutée</div>';
