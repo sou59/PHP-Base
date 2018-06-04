@@ -2,26 +2,49 @@
 require(__DIR__.'/partials/header.php');
 ?>
 
-<h1> Résultat de votre recherche pour : 
-<?php 
+<?php
 
-            // Récupérer l'id de la bière dans l'URL
-            var_dump($_GET);
-            if ()
-//             $id = $_GET['name'];
-//             $query = $db->prepare('SELECT * FROM beer WHERE id = :id'); // :id est un paramètre
-//             $query->bindValue(':id', $id, PDO::PARAM_INT); // On s'assure que l'id est bien un entier
-//             $query->execute(); // Execute la requête
-//             $beer = $query->fetch();
-//             // Récupérer la marque de la bière
-//             $query = $db->query('SELECT * FROM brand WHERE id = '.$beer['brand_id']);
-//             $brand = $query->fetch();
-//             // Récupérer l'EBC de la bière
-//             $query = $db->prepare('SELECT * FROM ebc WHERE id = :id');
-//             $query->bindValue(':id', $beer['ebc_id'], PDO::PARAM_INT);
-//             $query->execute();
-//             $ebc = $query->fetch();
-// ?>
+    $q = null;
+    $beers = null;
+
+    if(isset($_GET['search'])){
+        $q = $_GET['search'];
+        $query = $db->prepare("SELECT * FROM beer WHERE `name` LIKE '%".$q."%'"); 
+        //var_dump($q);
+        $query->bindValue('%".$q."%', $q, PDO::PARAM_STR); 
+        $query->execute(); // Execute la requête
+        $beers = $query->fetchAll();
+        
+        //var_dump($beers);
+    }
+?>
+
+<div class="container pt-5">
+    <h1>Résultat de votre recherche pour : <?php echo $q ?></h1>
+    <div class="row pt-4">
+        <?php
+       // On affiche la liste des bières
+       if (!empty($q)) {
+            foreach ($beers as $beer) {
+                echo '<div class="col-md-3">';
+                    echo '<div class="card mb-4 box-shadow">';
+                        echo '<img class="beer-img d-block card-img-top" src="'.$beer['image'].'" />';
+                        echo '<div class="card-body">';
+                            echo '<p class="text-center font-weight-bold">';
+                                echo $beer['name'];
+                            echo '</p>';
+                            echo '<a href="beer_single.php?id='.$beer['id'].'" class="btn btn-primary btn-block">Voir la bière</a>';
+                        echo '</div>';
+                    echo '</div>';
+                echo '</div>';
+            } 
+        } else {
+            echo "Le nom n\'est pas valide";
+        }
+
+    ?>
+    </div>
+</div>
 
 
 

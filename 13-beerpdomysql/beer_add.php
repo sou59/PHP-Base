@@ -21,8 +21,6 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
     <h1>Ajouter une bière</h1>
     <?php
      // On définis les variables pour éviter des "Notices" quand on les affichera dans le formulaire
-     $name = null;
-
     $name = null;
     $degree = null;
     $price = null;
