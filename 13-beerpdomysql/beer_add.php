@@ -118,8 +118,6 @@ require('partials/header.php'); ?>
             return $newString;
         }
 
-        var_dump(slugify('Cèh\'ti Aîmàbrée'));
-
         // Détecter quand le formulaire est soumis
         // On peut aussi utilise $_SERVER
         if (!empty($_POST)) {
@@ -195,16 +193,15 @@ require('partials/header.php'); ?>
 
                     // Récupérer l'extension du fichier
                     $originalName = $_FILES['image']['name'];
-                    $extension = pathinfo('product.png')['extension']; // Retourne jpg, png ou gif
+                    $extension = pathinfo($originalName)['extension']; // Retourne jpg, png ou gif
 
                     // Générer le nom de l'image
                     // Ch'ti -> chti
                     // Ch'ti Ambrée -> chti-ambree
-                    $brand = slugify($brand);
+                    $brand = slugify($brand['name']);
                     $name = slugify($name);
-                    var_dump($brand);
-                    var_dump($name);
-                    $filename = 'MARQUE-NOMDELABIERE.'.$extension;
+                    $filename = $brand.'-'.$name.'.'.$extension;
+                    var_dump($filename);
 
                     echo '<div class="alert alert-success">La bière a bien été ajouté.</div>';
                 }
