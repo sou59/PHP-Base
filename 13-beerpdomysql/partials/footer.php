@@ -1,7 +1,10 @@
   
     <footer class="footer">
       <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
+        <span class="text-muted">Nombre de requête : <?php echo $countSQL;  ?>
+        
+        </span>
+
       </div>
     </footer>
 

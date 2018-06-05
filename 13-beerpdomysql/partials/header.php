@@ -29,8 +29,13 @@ require(__DIR__.'/../config/database.php');
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+    
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form method="GET" action="search.php" class="form-inline mx-auto">
+                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
                 <?php
                 // Permet de récupérer le nom de la page sur laquelle on se trouve
                 $page = basename($_SERVER['REQUEST_URI'], '.php'); ?>
@@ -44,13 +49,16 @@ require(__DIR__.'/../config/database.php');
                     <li class="nav-item <?php echo ($page == 'beer_add') ? 'active' : '' ?>">
                         <a class="nav-link" href="beer_add.php">Ajouter une bière</a>
                     </li>
+                    <li class="nav-item <?php echo ($page == 'brewery_list') ? 'active' : '' ?>">
+                        <a class="nav-link" href="brewery_list.php">Les Brasserie</a>
+                    </li>
+                    <li class="nav-item <?php echo ($page == 'brewery_add') ? 'active' : '' ?>">
+                        <a class="nav-link" href="brewery_add.php">Ajouter une brasserie</a>
+                    </li>
                 </ul>
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form method="GET" action="search.php" class="form-inline ml-auto">
-                <input class="form-control mr-sm-2" type="query" name="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+
             </div>    
             
             <?php //var_dump(basename($_SERVER['REQUEST_URI'], '.php')); ?>

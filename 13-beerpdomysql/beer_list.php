@@ -3,9 +3,23 @@ require(__DIR__.'/partials/header.php');
 
 // Récupérer la liste des bières
 // Requête
-$query = $db->query('SELECT * FROM beer');
+ // SELECT * FROM beer INNER JOIN brand ON beer.brand_id = brand.id INNER JOIN ebc ON beer.ebc_id = ebc.id
+//$query = $db->query('SELECT * FROM beer');
+
+// creer des alias
+
+$query = $db->query('SELECT beer.id, beer.name, beer.image, brand.id as id_brand, brand.name as name_brand, ebc.code, ebc.color 
+    FROM beer 
+    INNER JOIN brand ON beer.brand_id = brand.id
+    INNER JOIN ebc ON beer.ebc_id = ebc.id');
+
 // Résultat
 $beers = $query->fetchAll();
+//var_dump($beers);
+
+//$brand = $beers.brand_id
+//$ebc
+//$countSQL++;
 ?>
 
 <!-- Le contenu de la page -->
@@ -20,7 +34,13 @@ $beers = $query->fetchAll();
                     echo '<img class="beer-img d-block card-img-top" src="'.$beer['image'].'" />';
                     echo '<div class="card-body">';
                         echo '<p class="text-center font-weight-bold">';
-                            echo $beer['name'];
+                            echo 'Nom : ' . $beer['name'];
+                        echo '</p>';
+                        echo '<p class="text-center font-weight-bold">';
+                            echo 'Marque : ' . $beer['name_brand'];
+                        echo '</p>';
+                        echo '<p class="text-center font-weight-bold" style="background-color: #' . $beer["color"] . '">';
+                            echo 'Couleur : ' . $beer['color'];
                         echo '</p>';
                         // Ajouter un bouton (a href) "Voir la bière"
                         // Quand on clique sur le bouton, on doit se rendre sur la page beer_single.php
