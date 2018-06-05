@@ -4,12 +4,14 @@ require(__DIR__.'/partials/header.php');
 
 
 <?php
+    // variable déclarer à null
     $name = null;
     $address = null;
     $city = null;
     $zip = null;
     $country = null;
     
+    // si £_POST n'est pas vide on affecte les variables = au POST
     if (!empty($_POST)) {
         $name = $_POST['name'];
         $address = $_POST['address'];
@@ -25,58 +27,92 @@ require(__DIR__.'/partials/header.php');
         }
     }
 
+    // vérification des erreurs
     if (!empty($_POST)) {
         // définir un tableau d'erreur vide qui va se remplir après chaque erreur
         $errors = [];
-            // $name doit faire au moins 3 caractères
-            if (strlen($name) < 3) {
-                $errors['name'] = "Nom invalide";
-            }
-
-            if (strlen($address) < 10) {
-                $errors['address'] = "Adresse invalide";
-            }
-            if (strlen($city) < 3) {
-                $errors['city'] = "Ville invalide";
-            }
-            if (strlen($zip) < 1 || strlen($zip) > 5 ) {
-                $errors['zip'] = "Code postal invalide";
-            }
-           
-            if (!in_array($country, ['France', 'Belgique', 'Royaume-Unis', 'Irelande', 'Allemagne', 'Italie'])) {
-                $errors['country'] = "Pays invalide";
-            }
-
+        // $name doit faire au moins 3 caractères
+        if (strlen($name) < 3) {
+            $errors['name'] = "Nom invalide";
         }
 
+        if (strlen($address) < 10) {
+            $errors['address'] = "Adresse invalide";
+        }
+        if (strlen($city) < 3) {
+            $errors['city'] = "Ville invalide";
+        }
+        if (strlen($zip) < 1 || strlen($zip) > 5 ) {
+            $errors['zip'] = "Code postal invalide";
+        }
+        
+        // if (!in_array($country, ['France', 'Belgique', 'Royaume-Unis', 'Irelande', 'Allemagne', 'Italie'])) {
+        //     $errors['country'] = "Pays invalide";
+        // }
+        // S'il n'y a pas d'erreurs dans le formulaire
+
+        // si le tableau d'erreur est vide et donc que les données sont valides on insère les données dans la table brewery
+        if (empty($errors)) {
+
+            $query = $db->prepare('INSERT INTO brewery (`name`, `address`, city, zip, country) VALUES (:name, :address, :city, :zip, :country)');
+
+            $query->bindValue(':name', $name, PDO::PARAM_STR);
+            $query->bindValue(':address', $address, PDO::PARAM_STR);
+            $query->bindValue(':city', $city, PDO::PARAM_STR);
+            $query->bindValue(':zip', $zip, PDO::PARAM_STR);
+            $query->bindValue(':country', $country, PDO::PARAM_STR);
+            $query->execute();
+            echo '<div class="alerte alert-sucess">La bière a bien été ajoutée</div>';
+        }  
+    }
+
+    var_dump($errors);
 ?>
 
 
 <div class="container">
-<h1>Ajouter une brasserie </h1>
+    <h1>Ajouter une brasserie </h1>
 
-<form method="POST" action="" enctype="multipart/form-data">
-    <?php
-    
-    $fields = ['name' => 'Nom', 'address' => 'Adresse', 'city' => 'Ville', 'zip' => 'CP', 'country' => 'Pays',  ]; // Les champs du formulaire à afficher
-    foreach ($fields as $field => $label) { ?>
+    <form method="POST" action="" enctype="multipart/form-data">
+        <?php
+            // création de label-input pour chaque donnée sauf country
+            $fields = ['name' => 'Nom', 'address' => 'Adresse', 'city' => 'Ville', 'zip' => 'CP',  ]; 
+            // Les champs du formulaire à afficher
+            foreach ($fields as $field => $label) { ?>
+                <div class="form-group">
+                    <label for="<?php echo $field; ?>"><?php echo $label; ?> :</label>
+                    <input type="text" name="<?php echo $field; ?>" id="<?php echo $field; ?>" class="form-control <?php echo isset($errors[$field]) ? 'is-invalid' : null; ?>" value="<?php echo $$field; ?>">
+                    <?php if (isset($errors[$field])) {
+                        echo '<div class="invalid-feedback">';
+                            echo $errors[$field];
+                        echo '</div>';
+                        } ?>
+                </div>
+            <?php } ?>
         <div class="form-group">
-            <label for="<?php echo $field; ?>"><?php echo $label; ?> :</label>
-            <input type="text" name="<?php echo $field; ?>" id="<?php echo $field; ?>" class="form-control <?php echo isset($errors[$field]) ? 'is-invalid' : null; ?>" value="<?php echo $$field; ?>">
-            <?php if (isset($errors[$field])) {
-                echo '<div class="invalid-feedback">';
-                     echo $errors[$field];
-                echo '</div>';
-                } ?>
+            <label for="country">Pays :</label>
+            <select class="form-control" id="country" name="country">
+                <option hidden value="">Choisissez votre pays</option>
+                <option <?php echo ($country == 'France') ? 'selected' : ''; ?> value="France">France</option>
+                <option <?php echo ($country == 'Belgique') ? 'selected' : ''; ?> value="Belgique">Belgique</option>
+                <option <?php if ($country == 'Royaume-Unis') { echo 'selected'; } ?> value="Royaume-Unis">Royaume-Unis</option>
+                <option <?php echo ($country == 'Allemagne') ? 'selected' : ''; ?> value="Allemagne">Allemagne</option>
+                <option <?php echo ($country == 'Irelande') ? 'selected' : ''; ?> value="Irelande">Irelande</option>
+                <option <?php if ($country == 'Italie') { echo 'selected'; } ?> value="italie">Italie</option>
+            </select>
         </div>
-    <?php } ?>
 
-    <button class="btn btn-primary">Ajouter</button>
+        <button class="btn btn-primary">Ajouter</button>
 
-</form>        
-
+    </form>        
 </div>
+
+
+
 <?php 
+var_dump($_POST);
+
+
 require(__DIR__.'/partials/footer.php');
 ?>
 
