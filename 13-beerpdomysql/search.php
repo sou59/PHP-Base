@@ -9,9 +9,11 @@ require(__DIR__.'/partials/header.php');
 
     if(isset($_GET['search'])){
         $q = $_GET['search'];
-        $query = $db->prepare("SELECT * FROM beer WHERE `name` LIKE '%".$q."%'"); 
+        //:q après LIKE attention lui donner une valeur dans bindValue
+        $query = $db->prepare("SELECT * FROM beer WHERE `name` LIKE :q"); 
         //var_dump($q);
-        $query->bindValue('%".$q."%', $q, PDO::PARAM_STR); 
+        // on récupère :q on lui attribue la valeur *q* = n'importe quel caractère avant ou après
+        $query->bindValue(':q', "%".$q."%", PDO::PARAM_STR); 
         $query->execute(); // Execute la requête
         $beers = $query->fetchAll();
         
