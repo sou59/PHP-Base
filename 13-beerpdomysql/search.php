@@ -1,5 +1,5 @@
 <?php 
-// s'il n'y a pas de rechecheou que la recherche est vide
+// s'il n'y a pas de recheche ou que la recherche est vide
 if(!isset($_GET['search']) || empty($_GET['search'])){
     header('Location: beer_list.php');
     exit();

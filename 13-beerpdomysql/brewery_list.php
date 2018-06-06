@@ -9,10 +9,10 @@ $brewery = $query->fetchAll();
 ?>
 <div class="container pt-5">
     <h1>La liste des Brasseries</h1>
-    <table class="table">
-        <thead>
+    <table class="table table-hover">
+        <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">id</th>
                 <th scope="col">Nom de la brasserie</th>
                 <th scope="col">Adresse</th>
                 <th scope="col">Ville</th>
@@ -25,7 +25,7 @@ $brewery = $query->fetchAll();
                 <?php
                 $nb = 1;
                     foreach ($brewery as $brewerys) {
-                        echo '<tr><th scope="row">' . $nb++ . '</th>';
+                        echo '<td>' . $brewerys['id'] . '</td>';
                         echo '<td>' . $brewerys['name'] . '</td>';
                         echo '<td>' . $brewerys['address'] . '</td>';
                         echo '<td>' . $brewerys['city'] . '</td>';
@@ -34,7 +34,7 @@ $brewery = $query->fetchAll();
                         echo '<td><a href="brewery_single.php?id=' .$brewerys['id']. '" class="btn btn-primary btn-block">Voir la brasserie</a></td>';
                         echo '</tr>';
                     }
-                    var_dump($brewerys);
+                    //var_dump($brewerys);
                 ?>
         </tbody>
     </table>
