@@ -67,7 +67,7 @@ require('partials/header.php'); ?>
             }
 
             // Quand le formulaire n'est pas valide, on affiche les erreurs
-            if (!empty($errors)) {
+            if ($errors) {
                 echo '<div class="alert alert-danger">';
                 foreach ($errors as $error) {
                     echo '<p>' . $error . '</p>';
@@ -80,19 +80,19 @@ require('partials/header.php'); ?>
     <form method="POST" action="">
         <div class="form-group">
             <label for="name">Nom</label>
-            <input type="text" name="name" id="name" class="form-control" value="<?php echo $name; ?>">
+            <input type="text" name="name" id="name" class="form-control <?php echo isset($errors['name']) ? 'is-invalid' : ''; ?>" value="<?php echo $name; ?>">
         </div>
         <div class="form-group">
             <label for="address">Adresse</label>
-            <input type="text" name="address" id="address" class="form-control" value="<?php echo $address; ?>">
+            <input type="text" name="address" id="address" class="form-control <?php echo isset($errors['address']) ? 'is-invalid' : ''; ?>" value="<?php echo $address; ?>">
         </div>
         <div class="form-group">
             <label for="city">Ville</label>
-            <input type="text" name="city" id="city" class="form-control" value="<?php echo $city; ?>">
+            <input type="text" name="city" id="city" class="form-control <?php echo isset($errors['city']) ? 'is-invalid' : ''; ?>" value="<?php echo $city; ?>">
         </div>
         <div class="form-group">
             <label for="zip">Code postal</label>
-            <input type="text" name="zip" id="zip" class="form-control" value="<?php echo $zip; ?>">
+            <input type="text" name="zip" id="zip" class="form-control <?php echo isset($errors['zip']) ? 'is-invalid' : ''; ?>" value="<?php echo $zip; ?>">
         </div>
         <div class="form-group">
             <label for="country">Pays</label>
