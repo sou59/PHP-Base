@@ -47,6 +47,12 @@ require(__DIR__.'/../config/database.php');
                     <li class="nav-item <?php echo ($page == 'beer_add') ? 'active' : '' ?>">
                         <a class="nav-link" href="beer_add.php">Ajouter une bière</a>
                     </li>
+                    <li class="nav-item <?php echo ($page == 'brewery_list') ? 'active' : '' ?>">
+                        <a class="nav-link" href="brewery_list.php">Les Brasseries</a>
+                    </li>
+                    <li class="nav-item <?php echo ($page == 'brewery_add') ? 'active' : '' ?>">
+                        <a class="nav-link" href="brewery_add.php">Ajouter une brasserie</a>
+                    </li>
                 </ul>
             </div>
         </div>
