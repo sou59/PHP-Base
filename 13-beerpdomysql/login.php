@@ -1,39 +1,51 @@
 <?php 
 require(__DIR__.'/partials/header.php');
+
 ?>
 
-<div class="container">
+<div class="container pt-5">
     <h1>Login</h1>
 
+    <?php
+      if (!empty($_POST)) {
+        $login = $_POST['login'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+      //  Récupération de l'utilisateur et de son passwor hashé
+        $query = $bd->prepare('SELECT * FROM user WHERE login = :login');
+        $query->execute(array(
+            'login' => $login));
 
-<form>
-  <div class="form-row align-items-center">
-    <div class="col-auto">
-      <label class="sr-only" for="inlineFormInput">Name</label>
-      <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Jane Doe">
-    </div>
-    <div class="col-auto">
-      <label class="sr-only" for="inlineFormInputGroup">Username</label>
-      <div class="input-group mb-2">
-        <div class="input-group-prepend">
-          <div class="input-group-text">@</div>
-        </div>
-        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
+        $resultat = $query->fetchAll();
+
+        //   $login = $_POST['login'];
+        //   $email = $_POST['email'];
+        //   $password = $_POST['password'];
+
+
+        } 
+
+    ?>
+
+    <form method="POST" action="">
+      <div class="form-group">
+        <label for="login">Login</label>
+        <input type="text" name="login" class="form-control" id="login" aria-describedby="loginHelp" placeholder="Votre login">
       </div>
-    </div>
-    <div class="col-auto">
-      <div class="form-check mb-2">
-        <input class="form-check-input" type="checkbox" id="autoSizingCheck">
-        <label class="form-check-label" for="autoSizingCheck">
-          Remember me
-        </label>
+
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Votre Email">
       </div>
-    </div>
-    <div class="col-auto">
-      <button type="submit" class="btn btn-primary mb-2">Submit</button>
-    </div>
-  </div>
-</form>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" id="password" placeholder="Votre mot de passe">
+      </div>
+
+      <button class="btn btn-primary">Login</button>
+    </form>
+
 </div>
 
 <?php 

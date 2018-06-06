@@ -56,8 +56,8 @@ require(__DIR__.'/../config/database.php');
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Brasserie
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="brewery_list.php">Les Brasserie</a>
-                            <a class="dropdown-item" href="beer_add.php">Ajouter une bière</a>
+                            <a class="dropdown-item" href="brewery_list.php">Les Brasseries</a>
+                            <a class="dropdown-item" href="brewery_add.php">Ajouter une brasserie</a>
                         </div>
                     </li>
                     <li class="nav-item <?php echo ($page == 'register') ? 'active' : '' ?>">
