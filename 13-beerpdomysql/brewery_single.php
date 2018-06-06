@@ -14,8 +14,9 @@ function breweryExists($id) {
     return $brewery; // La fonction retourne un tableau avec la brasserie ou false si la brasserie n'existe pas
 }
 
-// Est-ce qu'un ID existe dans l'url ?
-if (empty($_GET['id']) || !breweryExists($_GET['id'])) {
+// Est-ce qu'un ID existe dans l'url ? Est-ce que la brasserie existe en BDD ?
+$brewery = breweryExists($_GET['id']);
+if (empty($_GET['id']) || !$brewery) {
     // Permet de renvoyer une 404 si la brasserie n'existe pas
     header('HTTP/1.0 404 Not Found');
     // La 404 personnalisée
@@ -26,12 +27,12 @@ if (empty($_GET['id']) || !breweryExists($_GET['id'])) {
 
 <!-- Le contenu de la page -->
 <div class="container pt-5">
-    <h1>Nom de la brasserie</h1>
+    <h1><?php echo $brewery['name']; ?></h1>
     <ul class="list-unstyled">
-        <li><strong>Adresse :</strong> </li>
-        <li><strong>Ville :</strong> </li>
-        <li><strong>Code postal :</strong> </li>
-        <li><strong>Pays :</strong> </li>
+        <li><strong>Adresse :</strong> <?php echo $brewery['address']; ?></li>
+        <li><strong>Ville :</strong> <?php echo $brewery['city']; ?></li>
+        <li><strong>Code postal :</strong> <?php echo $brewery['zip']; ?></li>
+        <li><strong>Pays :</strong> <?php echo $brewery['country']; ?></li>
     </ul>
 </div>
 
