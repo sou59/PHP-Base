@@ -8,11 +8,13 @@ require(__DIR__.'/partials/header.php');
     <h1>Se connecter</h1>
 
     <?php
+
+      // si la variable existe et n'est pas vide
       if (!empty($_POST)) {
           $email = $_POST['email'];
           $password = $_POST['password'];
 
-        // Vérifie que lemail existe en BDD
+        // Vérifie que l'email existe en BDD
           $query = $db->prepare('SELECT * FROM user WHERE email = :email');
           $query->bindValue(':email', $email, PDO::PARAM_STR);
           $query->execute();
@@ -37,13 +39,18 @@ require(__DIR__.'/partials/header.php');
             // Ajout dans la session
             unset($user['password']); // enlevé le mdp pour qu'il ne s'affiche pas dans le var_dump
             $_SESSION['user'] = $user;
-          }
+
+            header('Location: '.$_GET['referer']);
+            exit();
+          }           
           var_dump($error);
       } 
+     // var_dump($_SERVER);
+      // HTTP_REFERER dernière page consulté, ou si rien envoyé sur la page d'accueil
 
     ?>
 
-    <form method="POST" action="">
+    <form method="POST" action="?referer=<?php echo$_SERVER['HTTP_REFERER'] ?? 'index.php'; ?>">
       <div class="form-group">
         <label for="email">Email address</label>
         <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">

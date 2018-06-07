@@ -4,6 +4,9 @@ session_start();
 // Configuration de PDO pour la base de données
 // On utilise la notation en absolue pour se repérer
 require(__DIR__.'/../config/database.php');
+
+// inclus le fichier avce les functions.php
+require(__DIR__.'/../config/functions.php');
 ?>
 
 <!doctype html>
@@ -23,7 +26,6 @@ require(__DIR__.'/../config/database.php');
     <!-- Le menu -->
 <header>
     
-    
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="ma-nav">
         <div class="container">
             <a class="navbar-brand" href="index.php">
@@ -31,7 +33,6 @@ require(__DIR__.'/../config/database.php');
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-    
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <form method="GET" action="search.php" class="form-inline mx-auto">
@@ -62,15 +63,14 @@ require(__DIR__.'/../config/database.php');
                         </div>
                     </li>
 
-                    <!-- // si connecte affiche dans le menu logout uniquement
-                    si pas connecte afficher les 2 liens inscription et login
-                     isset la variable existe donc -->
+                    <!-- // isset la variable existe donc si connecte affiche dans le menu logout uniquement
+                    si pas connecté afficher les 2 liens inscription et login -->
 
                     <?php if (isset($_SESSION['user'])) {
                          ?>
                         <li class="nav-item">
                             <span class="navbar-text">
-                            <?php echo $_SESSION['user']['email']; ?>
+                                <?php echo $_SESSION['user']['email']; ?>
                             </span>
                         </li>
                         <li class="nav-item <?php echo ($page == 'logout') ? 'active' : '' ?>">
@@ -90,12 +90,14 @@ require(__DIR__.'/../config/database.php');
   
                 </ul>
             </div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            </div>    
             
             <?php //var_dump(basename($_SERVER['REQUEST_URI'], '.php')); ?>
         </div> 
     </nav>
-    <?php var_dump($_SESSION); ?>
+   <?php
+    // var_dump($_SESSION);
+    //var_dump($_SERVER['HTTP_REFERER']);
+    
+
+     ?>
 </header>

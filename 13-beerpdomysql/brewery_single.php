@@ -2,17 +2,7 @@
 require(__DIR__.'/partials/header.php');
 
 
-    // s'il n'y a la brasserie existe se connecter à la table brasserie
-    function breweryExists($id) {
-        global $db;
-        $query =  $db->prepare('SELECT * FROM brewery WHERE id = :id'); // :id est un paramètre
-        $query->bindValue(':id', $id, PDO::PARAM_INT); // On s'assure que l'id est bien un entier
-        $query->execute(); // Execute la requête
-        $brewery = $query->fetch();
-        
-        return $brewery;
-
-    }
+    
     $brewery = breweryExists($_GET['id']);
     // si l
     if(empty($_GET['id']) || !$brewery){
@@ -23,16 +13,6 @@ require(__DIR__.'/partials/header.php');
     }
 
     ?>
-
-    <!-- <?php
-        $id = $_GET['id'];
-        $query = $db->prepare('SELECT * FROM brewery WHERE id = :id'); // :id est un paramètre
-        $query->bindValue(':id', $id, PDO::PARAM_INT); // On s'assure que l'id est bien un entier
-        $query->execute(); // Execute la requête
-        $brewery = $query->fetch();
-
-    ?> -->
-
 
     <div class="container pt-5">
         <h1>Votre choix de brasserie :  <?php echo $brewery['name']; ?></h1>
