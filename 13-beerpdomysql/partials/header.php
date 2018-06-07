@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 // Configuration de PDO pour la base de données
 // On utilise la notation en absolue pour se repérer
@@ -60,13 +61,33 @@ require(__DIR__.'/../config/database.php');
                             <a class="dropdown-item" href="brewery_add.php">Ajouter une brasserie</a>
                         </div>
                     </li>
-                    <li class="nav-item <?php echo ($page == 'register') ? 'active' : '' ?>">
+
+                    <!-- // si connecte affiche dans le menu logout uniquement
+                    si pas connecte afficher les 2 liens inscription et login
+                     isset la variable existe donc -->
+
+                    <?php if (isset($_SESSION['user'])) {
+                         ?>
+                        <li class="nav-item">
+                            <span class="navbar-text">
+                            <?php echo $_SESSION['user']['email']; ?>
+                            </span>
+                        </li>
+                        <li class="nav-item <?php echo ($page == 'logout') ? 'active' : '' ?>">
+                            <a class="nav-link" href="logout.php">Logout</a>
+                        </li>
+                    <?php 
+                    } else { ?>
+                        <li class="nav-item <?php echo ($page == 'register') ? 'active' : '' ?>">
                         <a class="nav-link" href="register.php">Inscription</a>
-                    </li>
-                    <li class="nav-item <?php echo ($page == 'login') ? 'active' : '' ?>">
-                        <a class="nav-link" href="login.php">Login</a>
-                    </li>
-                    
+                        </li>
+                        <li class="nav-item <?php echo ($page == 'login') ? 'active' : '' ?>">
+                            <a class="nav-link" href="login.php">Login</a>
+                        </li>
+                        
+                    <?php
+                    } ?>
+  
                 </ul>
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -76,5 +97,5 @@ require(__DIR__.'/../config/database.php');
             <?php //var_dump(basename($_SERVER['REQUEST_URI'], '.php')); ?>
         </div> 
     </nav>
-    
+    <?php var_dump($_SESSION); ?>
 </header>
