@@ -2,9 +2,10 @@
 session_start();
 
 // supprimer la session de user
-// attention session_detroy(); supprime tout même le panier ou les préférences de session
+// attention session_detroy(); supprime toute la session même le panier ou les préférences de session
 // ici on ne veut supprimer que la session log
 
+// Il vaut mieux seulement détruire l'utilisateur
 if(isset($_SESSION['user'])) {
     unset($_SESSION['user']);
 }

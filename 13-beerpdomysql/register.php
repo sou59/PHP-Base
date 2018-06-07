@@ -1,5 +1,6 @@
 <?php 
 require(__DIR__.'/partials/header.php');
+
 if (userIsLogged()) {
     header('Location: index.php');
 }

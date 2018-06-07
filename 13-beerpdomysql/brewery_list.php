@@ -4,6 +4,7 @@ require(__DIR__.'/partials/header.php');
 
 <?php 
 $query = $db->query('SELECT * FROM brewery');
+// Récupére toutes les brasseries
 $brewery = $query->fetchAll();
 // var_dump($brewery);
 ?>

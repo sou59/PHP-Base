@@ -12,6 +12,7 @@ require(__DIR__.'/partials/header.php');
     $country = null;
     
     // si $_POST n'est pas vide on affecte les variables = au POST
+    // vérifie que le formulaire est soumis
     if (!empty($_POST)) {
         $name = $_POST['name'];
         $address = $_POST['address'];
@@ -64,6 +65,7 @@ require(__DIR__.'/partials/header.php');
                 // S'il n'y a pas d'erreurs dans le formulaire
 
                 // si le tableau d'erreur est vide et donc que les données sont valides on insère les données dans la table brewery
+                // Quand le formulaire est valide, on ajoute la brasserie dans la BDD
                 if (empty($errors)) {
 
                     $query = $db->prepare('INSERT INTO brewery (`name`, `address`, city, zip, country) VALUES (:name, :address, :city, :zip, :country)');
@@ -75,6 +77,7 @@ require(__DIR__.'/partials/header.php');
                     $query->bindValue(':country', $country, PDO::PARAM_STR);
                     $query->execute();
                     // ou comme cela ne fonctionne que pour les chaines
+
                     $result = $query->execute([
                         ':name' =>$name,
                         ':address' =>$address,
@@ -82,12 +85,15 @@ require(__DIR__.'/partials/header.php');
                         ':zip' =>$zip,
                         ':country' =>$country
                     ]);
+                    // Raccourci du bindValue mais ne fonctionne que pour les chaines (PDO::PARAM_STR)
+                    if ($result) { // On s'assure que la requête s'est bien déroulée
 
                     echo '<div class="alerte alert-sucess">La bière a bien été ajoutée</div>';
                 }  
                 //var_dump($errors);
 
             }
+        }
             // création de label-input pour chaque donnée sauf country
             $fields = ['name' => 'Nom', 'address' => 'Adresse', 'city' => 'Ville', 'zip' => 'CP',  ]; 
             // Les champs du formulaire à afficher

@@ -38,17 +38,17 @@ require(__DIR__.'/partials/header.php');
           if (!$error) {
             $token = hash('sha256', $user['id'].$user['password'].$user['created_at']);
 
-            // Ajout dans la session
-            unset($user['password']); // enlevé le mdp pour qu'il ne s'affiche pas dans le var_dump
+            // Ajout de l'utilisateur dans la session
+            unset($user['password']); // enlevé le mdp haché par sécurité
             $_SESSION['user'] = $user;
 
-            // Si on coche la case remember me, on ajoute un cookie
+            // Si on coche la case "Remember me", on ajoute un cookie
              // domaine site pass... pour dire que l cookies ne sapplique qu'à ce domaine là par exemple
             if (isset($_POST['rememberme'])) { 
               setcookie('id', $user['id'], time() + 60 * 60 * 24 * 365);
               setcookie('token', $token, time() + 60 * 60 * 24 * 365);
             }
-            // Après la connection, on veut rediriger l'utilisateur vers la page sur laquelle il était avnt
+            // Après la connexion, on veut rediriger l'utilisateur vers la dernière page sur laquelle il était
             header('Location: '.$_GET['referer']);
             exit();
           }           
@@ -58,7 +58,7 @@ require(__DIR__.'/partials/header.php');
       // HTTP_REFERER dernière page consulté, ou si rien envoyé sur la page d'accueil
 
     ?>
-
+<!-- Le action nous permet soit de rediriger vers la dernière page après le login ou vers la page d'accueil -->
     <form method="POST" action="?referer=<?php echo $_SERVER['HTTP_REFERER'] ?? 'index.php'; ?>">
       <div class="form-group">
         <label for="email">Email address</label>

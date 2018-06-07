@@ -6,10 +6,20 @@
 // NE PAS UTILISER md5 OU sha1
 // Hachage de mot de passe selon l'algorithme bcrypt
 
-//Pour les mots de passe utiliser password-hash
-$password = password_hash('toto', PASSWORD_DEFAULT);
+// On doit parfois générer des "hash"
+// Un hash permet de masquer une vraie valeur
+$message = '1234';
+// Le md5 est une possibilité, il hash sur 32 caractères
+var_dump(md5($message)); // 098f6bcd4621d373cade4e832627b4f6
+var_dump(md5('test') === '098f6bcd4621d373cade4e832627b4f6');
+// Les sha* ont le même fonctionnement
+var_dump(sha1('1234'));
+var_dump(hash('sha256', '1234'));
+var_dump(hash('sha512', '1234'));
 
-// poure vérifier si le mdp est valide Retourne true ou false si correspondance
-password_verify('toto', $password);
-var_dump(password_verify('toto', $password));
-
+// Pour nos mots de passe, on va plutôt utiliser password_hash()
+$password = 'test';
+$hash = password_hash($password, PASSWORD_DEFAULT);
+var_dump($hash);
+// Pour vérifier le hash
+var_dump(password_verify('test', $hash));

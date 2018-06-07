@@ -1,20 +1,6 @@
 <?php 
 require(__DIR__.'/partials/header.php');
 ?>
-<!-- 
-Titre : ajouter une bière
-Formulaire avec les champs : 
-- Nom : champ saisie libre texte
-- Degrés : champ saisie libretexte ou range
-- Volume : champ select
-- Prix : champ saisie libretexte
-- Marque : Champ select ou autocompletion (dataliste)
-- Type : Champ select ou autocompletion (dataliste)
-Bouton button
-ne pas oublier la méthode du formulaire
-lorsque le formulaire est soumis récupérer la valeur de chacun des champs valider
-
--->
 
 <!-- Le contenu de la page -->
 <div class="container pt-5">
@@ -250,11 +236,6 @@ lorsque le formulaire est soumis récupérer la valeur de chacun des champs vali
 
         <button class="btn btn-primary">Ajouter</button>
     </form>
-
-<?php 
-
-    
-    ?>
 
 </div>
 
