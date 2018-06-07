@@ -29,12 +29,18 @@ require('partials/header.php'); ?>
 
             // Si le user existe, on peut se connecter
             if (!$error) {
+                // Token qui sera stocké dans le cookie
+                $token = hash('sha256', $user['id'].$user['password'].$user['created_at']);
+
                 // Ajout de l'utilisateur dans la session
                 unset($user['password']); // On enlève le mot de passe "hashé" par sécurité
                 $_SESSION['user'] = $user;
 
                 // Si on a coché la case "Remember me", on ajoute un cookie
-                setcookie('id', $user['id'], time() + 60 * 60 * 24 * 365);
+                if (isset($_POST['rememberme'])) {
+                    setcookie('id', $user['id'], time() + 60 * 60 * 24 * 365);
+                    setcookie('token', $token, time() + 60 * 60 * 24 * 365);
+                }
 
                 // Après la connexion, on veut rediriger l'utilisateur vers la dernière page sur laquelle il était
                 header('Location: '.$_GET['referer']);
@@ -54,6 +60,10 @@ require('partials/header.php'); ?>
         <div class="form-group">
             <label for="password">Mot de passe</label>
             <input type="password" name="password" id="password" class="form-control">
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="rememberme" name="rememberme">
+            <label class="form-check-label" for="rememberme">Se rappeler de moi</label>
         </div>
         <button class="btn btn-primary">Se connecter</button>
     </form>

@@ -50,8 +50,13 @@ function cookieAuthentication() {
     if (isset($_COOKIE['id'])) { // Si un cookie est présent
         $idUser = $_COOKIE['id']; // On récupérer l'id dans le cookie
         $query = $db->query('SELECT * FROM user WHERE id = '.$idUser);
-        $user = $query->fetch(); 
-        $_SESSION['user'] = $user; // On connecte le visiteur avec l'utilisateur correspondant à l'id dans le cookie
+        $user = $query->fetch();
+
+        $token = $_COOKIE['token']; // On vérifie que le cookie avec le token est valide
+        if ($token == hash('sha256', $user['id'].$user['password'].$user['created_at'])) {
+            unset($user['password']); // On enlève le mot de passe "hashé" par sécurité
+            $_SESSION['user'] = $user; // On connecte le visiteur avec l'utilisateur correspondant à l'id dans le cookie
+        }
     }
 }
 cookieAuthentication();
