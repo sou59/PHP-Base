@@ -50,6 +50,30 @@
 
     saveLastVisitedPage();
 
+    function userIsLogged() {
+        // ecriture réduite pour voir si la session est ouverte ou pas (true / false)
+        // idem que if (isset($_SESSION['user'])) {retur true; } return false;
+        return isset($_SESSION['user']);
+    }
+
+    // vérifie si un cookie est présent chez l'utilisateur et le connecte
+    function cookieAuthentification() {
+        global $db;
+        if(isset($_COOKIE['id'])) {
+            $idUser = $_COOKIE['id'];
+            $query = $db->query('SELECT * FROM user WHERE id = '.$idUser);
+            $user = $query->fetch();
+
+            $token = $_COOKIE['token'];
+
+            if ($token == hash('sha256', $user['id'].$user['password'].$user['created_at'])) {
+                unset($user['password']); // on enleve le mot de passe hashé par sécurité
+                $_SESSION['user'] = $user;
+            }
+        }
+    }
+
+    cookieAuthentification();
 
 
 

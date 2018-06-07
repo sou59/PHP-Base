@@ -9,6 +9,13 @@ if(isset($_SESSION['user'])) {
     unset($_SESSION['user']);
 }
 
+// supprime le cookie si il existe
+if(isset($_COOKIE['id'])) {
+    unset($_COOKIE['id']);
+    setcookie('id', '', time() - 3600);
+    unset($_COOKIE['token']);
+    setcookie('token', '', time() - 3600);
+}
 
 // rediriger vers l'index.php
 
