@@ -88,4 +88,4 @@ require(__DIR__.'/../config/functions.php');
     </nav>
     <?php // var_dump(basename($_SERVER['REQUEST_URI'], '.php')); ?>
     <?php // var_dump($_SESSION); ?>
-    <?php var_dump($_SERVER['HTTP_REFERER']); ?>
+    <?php // var_dump($_SERVER['HTTP_REFERER']); ?>
