@@ -32,14 +32,19 @@ require('partials/header.php'); ?>
                 // Ajout de l'utilisateur dans la session
                 unset($user['password']); // On enlève le mot de passe "hashé" par sécurité
                 $_SESSION['user'] = $user;
+
+                // Après la connexion, on veut rediriger l'utilisateur vers la dernière page sur laquelle il était
+                header('Location: '.$_GET['referer']);
+                exit();
             }
 
             var_dump($error);
         }
     ?>
-
-    <form method="POST">
-        <div class="form-group">
+    
+    <!-- Le action nous permet soit de rediriger vers la dernière page après le login ou vers la page d'accueil -->
+    <form method="POST" action="?referer=<?php echo $_SERVER['HTTP_REFERER'] ?? 'index.php'; ?>">
+        <div class="form-group"> 
             <label for="email">Email</label>
             <input type="text" name="email" id="email" class="form-control">
         </div>

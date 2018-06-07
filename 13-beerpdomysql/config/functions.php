@@ -27,3 +27,14 @@ function breweryExists($id) {
     
     return $brewery; // La fonction retourne un tableau avec la brasserie ou false si la brasserie n'existe pas
 }
+
+// Permet de sauvegarder la dernière page que l'utilisateur a visité
+function saveLastVisitedPage() {
+    if (!isset($_SERVER['HTTP_REFERER'])) {
+        return; // On ne fait rien si la clé HTTP_REFERER n'existe pas
+    }
+
+    $urlLastPage = $_SERVER['HTTP_REFERER']; // On récupére la dernière page visitée
+    $_SESSION['lastPage'] = $urlLastPage;
+}
+saveLastVisitedPage();
