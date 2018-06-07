@@ -4,6 +4,8 @@ session_start();
 // Configuration de PDO pour la base de données
 // On utilise la notation en absolue pour se repérer
 require(__DIR__.'/../config/database.php');
+// Inclus le fichier avec toutes nos fonctions PHP
+require(__DIR__.'/../config/functions.php');
 ?>
 
 <!doctype html>
@@ -85,4 +87,5 @@ require(__DIR__.'/../config/database.php');
         </div>
     </nav>
     <?php // var_dump(basename($_SERVER['REQUEST_URI'], '.php')); ?>
-    <?php var_dump($_SESSION); ?>
+    <?php // var_dump($_SESSION); ?>
+    <?php var_dump($_SERVER['HTTP_REFERER']); ?>
