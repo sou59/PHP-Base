@@ -38,3 +38,20 @@ function saveLastVisitedPage() {
     $_SESSION['lastPage'] = $urlLastPage;
 }
 saveLastVisitedPage();
+
+// Renvoie true si quelqu'un est connecté ou false si pas connecté
+function userIsLogged() {
+    return isset($_SESSION['user']);
+}
+
+// Vérifie si un cookie est présent chez l'utilisateur et le connecte automatiquement
+function cookieAuthentication() {
+    global $db;
+    if (isset($_COOKIE['id'])) { // Si un cookie est présent
+        $idUser = $_COOKIE['id']; // On récupérer l'id dans le cookie
+        $query = $db->query('SELECT * FROM user WHERE id = '.$idUser);
+        $user = $query->fetch(); 
+        $_SESSION['user'] = $user; // On connecte le visiteur avec l'utilisateur correspondant à l'id dans le cookie
+    }
+}
+cookieAuthentication();
