@@ -18,7 +18,11 @@ $brewery = $query->fetchAll();
                 <th scope="col">Ville</th>
                 <th scope="col">Code postal</th>
                 <th scope="col">Pays</th>
-                <th scope="col">Modifier / Supprimer</th>
+                <th scope="col">Voir la brasserie</th>
+                <?php if (userIsLogged()) { ?>
+                <th scope="col">Modifier la brasserie</th>
+                <th scope="col">Supprimer  la brasserie</th>
+                <?php } ?>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +36,12 @@ $brewery = $query->fetchAll();
                         echo '<td>' . $brewerys['zip'] . '</td>';
                         echo '<td>' . $brewerys['country'] . '</td>';
                         echo '<td><a href="brewery_single.php?id=' .$brewerys['id']. '" class="btn btn-primary btn-block">Voir la brasserie</a></td>';
+                            if (userIsLogged()) {
+                            echo '<td><a href="brewery_delete.php?id=' .$brewerys['id']. '" class="btn btn-primary btn-block">supprimer la brasserie</a></td>';
+                            }
+
+                        //echo '<td><a href="brewery_single.php?id=' .$brewerys['id']. '" class="btn btn-danger btn-block">Voir la brasserie</a></td>';
+                        
                         echo '</tr>';
                     }
                     //var_dump($brewerys);
