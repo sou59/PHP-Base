@@ -1,5 +1,4 @@
 <?php
-session_start();
 require('partials/header.php'); ?>
 
 <div class="container pt-5">
@@ -24,17 +23,18 @@ require('partials/header.php'); ?>
             }
 
             // Est-ce que le mot de passe est correct ?
-            if (!password_verify($password, $user['password'])) {
+            if ($user && !password_verify($password, $user['password'])) {
                 $error = 'Le mot de passe n\'est pas correct';
             }
-            
-            
-            var_dump($user, $password, $error);
 
             // Si le user existe, on peut se connecter
             if (!$error) {
-                
+                // Ajout de l'utilisateur dans la session
+                unset($user['password']); // On enlève le mot de passe "hashé" par sécurité
+                $_SESSION['user'] = $user;
             }
+
+            var_dump($error);
         }
     ?>
 
