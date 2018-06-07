@@ -4,6 +4,8 @@ session_start();
 // Configuration de PDO pour la base de données
 // On utilise la notation en absolue pour se repérer
 require(__DIR__.'/../config/database.php');
+// Inclus le fichier avec toutes nos fonctions PHP
+require(__DIR__.'/../config/functions.php');
 ?>
 
 <!doctype html>
@@ -64,6 +66,11 @@ require(__DIR__.'/../config/database.php');
                     <!-- Si un utilisateur existe dans la session, on affiche son email et un lien vers logout.php pour se déconnecter.
                     S'il n'y a pas d'utilisateur dans la session, on affiche les 2 liens pour s'inscrire et se connecter -->
                     <?php if (isset($_SESSION['user'])) { ?>
+                        <li class="nav-item">
+                            <span class="navbar-text">
+                                <?php echo $_SESSION['user']['email']; ?>
+                            </span>
+                        </li>
                         <li class="nav-item <?php echo ($page == 'logout') ? 'active' : '' ?>">
                             <a class="nav-link" href="logout.php">Logout</a>
                         </li>
@@ -80,4 +87,5 @@ require(__DIR__.'/../config/database.php');
         </div>
     </nav>
     <?php // var_dump(basename($_SERVER['REQUEST_URI'], '.php')); ?>
-    <?php var_dump($_SESSION); ?>
+    <?php // var_dump($_SESSION); ?>
+    <?php var_dump($_SERVER['HTTP_REFERER']); ?>
