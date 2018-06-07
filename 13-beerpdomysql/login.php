@@ -33,6 +33,9 @@ require('partials/header.php'); ?>
                 unset($user['password']); // On enlève le mot de passe "hashé" par sécurité
                 $_SESSION['user'] = $user;
 
+                // Si on a coché la case "Remember me", on ajoute un cookie
+                setcookie('id', $user['id'], time() + 60 * 60 * 24 * 365);
+
                 // Après la connexion, on veut rediriger l'utilisateur vers la dernière page sur laquelle il était
                 header('Location: '.$_GET['referer']);
                 exit();
