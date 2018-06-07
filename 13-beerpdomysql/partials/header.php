@@ -64,6 +64,11 @@ require(__DIR__.'/../config/database.php');
                     <!-- Si un utilisateur existe dans la session, on affiche son email et un lien vers logout.php pour se déconnecter.
                     S'il n'y a pas d'utilisateur dans la session, on affiche les 2 liens pour s'inscrire et se connecter -->
                     <?php if (isset($_SESSION['user'])) { ?>
+                        <li class="nav-item">
+                            <span class="navbar-text">
+                                <?php echo $_SESSION['user']['email']; ?>
+                            </span>
+                        </li>
                         <li class="nav-item <?php echo ($page == 'logout') ? 'active' : '' ?>">
                             <a class="nav-link" href="logout.php">Logout</a>
                         </li>
