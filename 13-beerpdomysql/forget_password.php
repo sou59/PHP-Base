@@ -20,7 +20,14 @@ require('partials/header.php'); ?>
         var_dump($emailExists);
 
         if ($emailExists) {
-            echo 'Envoi du mail';
+            // Récupère le user
+            $user = $db->query('SELECT * FROM user WHERE email = "'.$email.'"')->fetch();
+
+            // Permet de générer une URL complète vers le projet
+            $baseUrl = 'http://localhost'.dirname($_SERVER['REQUEST_URI']);
+            $token = hash('sha256', $user['id'].$user['password'].$user['created_at']);
+            $link = $baseUrl.'/reset_password.php?token='.$token;
+
             $password = include 'password.php';
             // Create the Transport
             $transport = (new Swift_SmtpTransport('smtp.gmail.com', 587))
@@ -42,7 +49,7 @@ require('partials/header.php'); ?>
             $message = (new Swift_Message('Wonderful Subject'))
                 ->setFrom(['john@doe.com' => 'John Doe'])
                 ->setTo(['matthieumota@gmail.com'])
-                ->setBody('Here is the message itself')
+                ->setBody('Lien pour le mot de passe : '.$link)
             ;
 
             // Send the message
