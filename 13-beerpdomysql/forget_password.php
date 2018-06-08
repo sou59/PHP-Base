@@ -26,7 +26,7 @@ require('partials/header.php'); ?>
             // Permet de générer une URL complète vers le projet
             $baseUrl = 'http://localhost'.dirname($_SERVER['REQUEST_URI']);
             $token = hash('sha256', $user['id'].$user['password'].$user['created_at']);
-            $link = $baseUrl.'/reset_password.php?token='.$token;
+            $link = $baseUrl.'/reset_password.php?token='.$token.'&id='.$user['id'];
 
             $password = include 'password.php';
             // Create the Transport
