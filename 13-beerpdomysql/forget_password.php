@@ -21,10 +21,11 @@ require('partials/header.php'); ?>
 
         if ($emailExists) {
             echo 'Envoi du mail';
+            $password = include 'password.php';
             // Create the Transport
             $transport = (new Swift_SmtpTransport('smtp.gmail.com', 587))
                 ->setUsername('webforcelille2@gmail.com')
-                ->setPassword('W3bforce')
+                ->setPassword($password)
                 ->setEncryption('tls')
                 ->setStreamOptions([
                     'ssl' => [
