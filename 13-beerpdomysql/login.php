@@ -75,6 +75,7 @@ require(__DIR__.'/partials/header.php');
         <label class="form-check-label" for="rememberme">Se souvenir de moi</label>
       </div>
 
+      <a href="forget_modepasse.php">Modifier mon mot de passe</a>
       <button class="btn btn-primary">Login</button>
     </form>
 

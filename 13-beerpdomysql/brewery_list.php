@@ -27,25 +27,23 @@ $brewery = $query->fetchAll();
             </tr>
         </thead>
         <tbody>
-                <?php
-                $nb = 1;
-                    foreach ($brewery as $brewerys) {
-                        echo '<td>' . $brewerys['id'] . '</td>';
-                        echo '<td>' . $brewerys['name'] . '</td>';
-                        echo '<td>' . $brewerys['address'] . '</td>';
-                        echo '<td>' . $brewerys['city'] . '</td>';
-                        echo '<td>' . $brewerys['zip'] . '</td>';
-                        echo '<td>' . $brewerys['country'] . '</td>';
-                        echo '<td><a href="brewery_single.php?id=' .$brewerys['id']. '" class="btn btn-primary btn-block">Voir la brasserie</a></td>';
-                            if (userIsLogged()) {
-                            echo '<td><a href="brewery_delete.php?id=' .$brewerys['id']. '" class="btn btn-primary btn-block">supprimer la brasserie</a></td>';
-                            }
-
-                        //echo '<td><a href="brewery_single.php?id=' .$brewerys['id']. '" class="btn btn-danger btn-block">Voir la brasserie</a></td>';
-                        
-                        echo '</tr>';
-                    }
-                    //var_dump($brewerys);
+            <?php
+            $nb = 1;
+                foreach ($brewery as $brewerys) {
+                    echo '<td>' . $brewerys['id'] . '</td>';
+                    echo '<td>' . $brewerys['name'] . '</td>';
+                    echo '<td>' . $brewerys['address'] . '</td>';
+                    echo '<td>' . $brewerys['city'] . '</td>';
+                    echo '<td>' . $brewerys['zip'] . '</td>';
+                    echo '<td>' . $brewerys['country'] . '</td>';
+                    echo '<td><a href="brewery_single.php?id=' .$brewerys['id']. '" class="btn btn-primary btn-block">Voir</a></td>';
+                        if (userIsLogged()) {
+                        echo '<td><a href="brewery_edit.php?id=' .$brewerys['id']. '" class="btn btn-success btn-block">Modifier</a></td>';
+                        echo '<td><a href="brewery_delete.php?id=' .$brewerys['id']. '" class="btn btn-danger btn-block confirm-delete">supprimer </a></td>';
+                        }
+                    echo '</tr>';
+                }
+                //var_dump($brewerys);
                 ?>
         </tbody>
     </table>

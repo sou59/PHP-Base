@@ -1,0 +1,12 @@
+{
+    "name": "webforce/composer",
+    "authors": [
+        {
+            "name": "Sou 59",
+            "email": "sz5962@gmail.com"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.0"
+    }
+}
