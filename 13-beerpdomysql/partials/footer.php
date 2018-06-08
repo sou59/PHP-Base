@@ -10,5 +10,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <!-- SweetAlert plugin -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- Mon script -->
+    <script src="js/script.js"></script>
   </body>
 </html>
