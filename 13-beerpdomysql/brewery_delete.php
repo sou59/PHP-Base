@@ -15,4 +15,7 @@ if (!userIsLogged()) {
 // Requête pour supprimer une brasserie
 $query = $db->prepare('DELETE FROM brewery WHERE id = :id');
 $query->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
-$query->execute();
+// Si la requête s'est bien executé
+if ($query->execute()) {
+    header('Location: brewery_list.php');
+}

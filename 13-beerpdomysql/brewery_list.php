@@ -38,7 +38,7 @@ require('partials/header.php'); ?>
                     echo '<td>';
                         echo '<a class="btn btn-info" href="brewery_single.php?id='.$brewery['id'].'">Voir la brasserie</a>';
                         if (userIsLogged()) {
-                            echo '<a class="btn btn-danger" href="brewery_delete.php?id='.$brewery['id'].'">Supprimer la brasserie</a>';
+                            echo '<a class="btn btn-danger confirm-delete" href="brewery_delete.php?id='.$brewery['id'].'">Supprimer la brasserie</a>';
                         }
                     echo '</td>';
                 echo '</tr>';
