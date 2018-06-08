@@ -1,5 +1,12 @@
 {
+    "name": "sousou/13-beerpdomysql",
+    "authors": [
+        {
+            "name": "Sou59",
+            "email": "sz5962@gmail.com"
+        }
+    ],
     "require": {
-        "swiftmailer/swiftmailer": "^6.0"
+        "swiftmailer/swiftmailer": "^5.4"
     }
 }
