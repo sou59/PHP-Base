@@ -36,9 +36,10 @@ require('partials/header.php'); ?>
                     echo '<td>'.$brewery['zip'].'</td>';
                     echo '<td>'.$brewery['country'].'</td>';
                     echo '<td>';
-                        echo '<a class="btn btn-info" href="brewery_single.php?id='.$brewery['id'].'">Voir la brasserie</a>';
+                        echo '<a class="btn btn-info" href="brewery_single.php?id='.$brewery['id'].'">Voir</a>';
                         if (userIsLogged()) {
-                            echo '<a class="btn btn-danger confirm-delete" href="brewery_delete.php?id='.$brewery['id'].'">Supprimer la brasserie</a>';
+                            echo '<a class="btn btn-success" href="brewery_edit.php?id='.$brewery['id'].'">Modifier</a>';
+                            echo '<a class="btn btn-danger confirm-delete" href="brewery_delete.php?id='.$brewery['id'].'">Supprimer</a>';
                         }
                     echo '</td>';
                 echo '</tr>';
