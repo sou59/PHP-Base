@@ -43,3 +43,27 @@
    Créer une page permettant d'afficher la liste de nos séries sans le synopsis.
 
    Créer une page permettant de voir une série en détail. On pourra lire le synopsis à partir de cette page.
+
+4. Gestion de séries (BONUS).
+
+   Nous allons ajouter la gestion de saisons/épisodes par séries.
+
+   Créer la table 'season' :
+   - id
+   - number INT
+   - title VARCHAR NULL
+   - released_at DATE
+   - show_id -> Relation avec l'id d'une série
+
+   Créer la table 'episode' :
+   - id
+   - number INT
+   - TITLE VARCHAR NULL
+   - released_at DATETIME
+   - season_id -> Relation avec l'id d'une saison
+
+   Créer une page avec un formulaire permettant d'ajouter une saison. Attention, il faudra ajouter un champ select avec le choix de la série.
+
+   Créer une page avec un formulaire permettant d'ajouter un épisode. Attention, il faudra ajouter un champ select avec le choix de la saison afficher sous la forme "SERIE - SAISON". Il faudra récupérer les option de ce select de manière dynamique directement dans la BDD.
+
+   On pourra voir la liste des saisons et des épisodes directement sur la fiche d'une série.
