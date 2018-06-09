@@ -69,11 +69,11 @@ echo 'La moyenne de Jean est de ' . $moyenne . ' / 20<br /><br />';
 
 echo "<p> Combien d\'élèves ont la moyenne : <p>";
 
-Exemple :
-Matthieu a la moyenne
-Jean n'a pas la moyenne
-Thomas a la moyenne
-Nombre d'éléves avec la moyenne : 2 */
+// Exemple :
+// Matthieu a la moyenne
+// Jean n'a pas la moyenne
+// Thomas a la moyenne
+// Nombre d'éléves avec la moyenne : 2 */
 $countAverage = 0;
 foreach ($eleves as $eleve) { //première boucle
     $moyenne = array_sum($eleve['notes']) / count($eleve['notes']);
