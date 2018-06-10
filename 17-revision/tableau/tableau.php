@@ -50,7 +50,7 @@
                 'ville' => 'AMIENS',
                 'phone' => '03.02.52.82.94'
                 ],
-            3 => [
+            4 => [
                 'nom' => 'Bourassa',
                 'prenom' => 'Aubrey',
                 'dateNaissance' => '14 novembre 1982',
@@ -60,7 +60,20 @@
                 ],
             ];
 
+            echo ' <br \>';
+            var_dump($contacts);
+            echo ' <br \>';
             
+            // $date = $contacts['dateNaissance'];
+            // list($jour, $mois, $annee) = explode(' ', $date);
+            // if(checkdate($mois,$jour,$annee))
+            // {
+            // echo "date valide";
+            // }
+            // else
+            // {
+            // echo "date non valide";
+            // }
                     
             foreach ($contacts as $contact) {
     
@@ -69,8 +82,26 @@
 
                 $dateNaissance = strtotime($contact['dateNaissance']);
                 $age = floor(abs($now - $dateNaissance) / (365 * 24 * 60 * 60));
-                
+
+                // $now = time();
+                // $anneeActuelle = date('Y', $now);
+                // echo $anneeActuelle;
+                // echo ' <br \>';
+                // $dateNaissance = $contact['dateNaissance'];
+                // var_dump($dateNaissance);
+                // echo ' <br \>';
+                // $annee = strtotime($dateNaissance);
+                // var_dump($annee);
+                // echo ' <br \>';
+                // $anneeNaissance = date('d m Y', $dateNaissance);
+                // echo $anneeNaissance;
+                // echo ' <br \>';
+
+                // $age = $anneeActuelle - $anneeNaissance;
+                // echo $age;
+
                 echo $contact['prenom']. ' '.$contact['nom']. ' est né le '.$contact['dateNaissance'].', il a '.$age.' ans. Il habite à '.$contact['ville'].' ('.$contact['cp'].'). Il est joignable au '.str_replace('.', ' ', $contact['phone']).'.<br \>';
+
             }
             ?>
             </h1>

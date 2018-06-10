@@ -59,7 +59,7 @@ require(__DIR__.'/partials/header.php');
 
     ?>
 <!-- Le action nous permet soit de rediriger vers la dernière page après le login ou vers la page d'accueil -->
-    <form method="POST" action="?referer=<?php echo $_SERVER['HTTP_REFERER'] ?? 'index.php'; ?>">
+<form method="POST" action="?referer=<?php echo $_SERVER['HTTP_REFERER'] ?? 'index.php'; ?>">
       <div class="form-group">
         <label for="email">Email address</label>
         <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
