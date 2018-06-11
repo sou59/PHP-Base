@@ -125,8 +125,7 @@ require(__DIR__.'/partials/header.php');
             // S'il n'y a pas d'erreurs dans le formulaire
             if (empty($errors)) {
 
-                $query = $db->prepare('
-                    INSERT INTO beer (`name`, degree, volum, `image`, price, brand_id, ebc_id)
+                $query = $db->prepare('INSERT INTO beer (`name`, degree, volum, `image`, price, brand_id, ebc_id)
                     VALUES (:name, :degree, :volum, :image, :price, :brand_id, :ebc_id)');
 
                 $query->bindValue(':name', $name, PDO::PARAM_STR);

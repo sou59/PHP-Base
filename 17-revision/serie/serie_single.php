@@ -18,9 +18,9 @@ require(__DIR__.'/partials/header.php');
         <h1>Votre choix de série :  <?php echo $serie['title']; ?></h1>
         <ul class="list-unstyled">
             <li><strong>Catégory :</strong> <?php echo $serie['category']; ?></li>
-            <li><strong>Couverture :</strong> <?php echo $serie['cover']; ?></li>
             <li><strong>Synopsis :</strong> <?php echo $serie['synopsis']; ?></li>
             <li><strong>Date de sortie :</strong> <?php echo $serie['released_at']; ?></li>
+            <li><strong>Couverture :</strong><?php echo '<img class="cover-img d-block card-img-top" src="'.$serie['cover'].'" />'; ?></li>
             <li>
                 <div class="modifform">
                     <a href="" class="btn btn-primary btn-block">Modifier la série</a>

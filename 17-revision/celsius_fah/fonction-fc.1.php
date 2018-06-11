@@ -11,7 +11,6 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet"  href="style.css">
 
     <!-- Custom styles for this template -->
     <!-- <link href="sticky-footer-navbar.css" rel="stylesheet"> -->
@@ -52,31 +51,32 @@
         <h1> Conversion des températures : Fahrenheit en Celsius </h1>
 
         <?php
-            //  function degrees($temp, $degrees) {
-            //     $fah = $degrees * 1.8 + 32;
-            //     return $fah;
-            //  }
-             
-            //  function fahToCel($temp, $degrees) {
-            //      $cel = ($degrees - 32) / 1.8;
-            //      return $cel;
-            //  }
 
-            
-
-            function degrees(float $temp, $degree) {
+            function degrees($temp, $degree) {
               $fah = $temp * 1.8 + 32;
               $cel = ($temp - 32) / 1.8;
-              $degree = ['C', 'F'];
 
-              if ($degree = 'C') {
-                return $temp.'°'.'C équivaut à '.$fah.'°F';
-              } elseif ($degree = 'F') {
-                return $temp.'°'.'F équivaut à '.$cel. '°C';
+              if($cel<0) {
+                $mesg = 'Il fait très chaud.';
+              }
+              elseif ($cel>0 || $cel<14){
+                $mesg = 'C\'est le nooord.';
+              }
+              elseif ($cel>=15 || $cel<=25){
+                $mesg = 'Il fait bon.';
+              }
+              elseif ($cel>25){
+                $mesg = 'Il fait trop chaud.';
+              }
+              
+
+              if ($degree == 'F') {
+                return $mesg. ' ' .$temp.'&deg;C équivaut à '.$fah.'&deg;F';
+                } elseif ($degree == 'C') {
+                return $mesg. ' ' .$temp. '&deg;F équivaut à '.$cel. '&deg;C';
                 }
-            }
+            } 
             
-
             echo degrees(27, 'F');
             echo '<br \>';
             echo degrees(41, 'C');            

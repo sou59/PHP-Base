@@ -9,17 +9,17 @@ $query = $db->query('SELECT * FROM showtv');
 // Récupére toutes les séries
 $series = $query->fetchAll();
  //var_dump($series);
+
 ?>
 
 
     <table class="table table-hover">
         <thead class="bg-primary">
             <tr>
-                <th scope="col">id</th>
+                <th scope="col">Numéro</th>
                 <th scope="col">Nom de la série</th>
                 <th scope="col">Catégorie</th>
                 <th scope="col">Couverture</th>
-                <th scope="col">Synopsis</th>
                 <th scope="col">Date</th>
                 <th scope="col">Voir la série</th>
                 <?php if (userIsLogged()) { ?>
@@ -35,8 +35,7 @@ $series = $query->fetchAll();
                     echo '<td>' . $serie['id'] . '</td>';
                     echo '<td>' . $serie['title'] . '</td>';
                     echo '<td>' . $serie['category'] . '</td>';
-                    echo '<td>' . $serie['cover'] . '</td>';
-                    echo '<td>' . $serie['synopsis'] . '</td>';
+                    echo '<td><img class="cover-img d-block card-img-top" src="'.$serie['cover'].'" /></td>';
                     echo '<td>' . $serie['released_at'] . '</td>';
                     echo '<td><a href="serie_single.php?id=' .$serie['id']. '" class="btn btn-primary btn-block">Voir</a></td>';
                         if (userIsLogged()) {
