@@ -12,7 +12,7 @@
    Nous voulons ce rendu final pour chacun des contacts :
    Auguste Fréchette est né le 30 novembre 1942, il a 75 ans. Il habite à Meudon (92190). Il est joignable au 01 22 88 26 88
 
-2. Créer une fonction permettant de convertir des degrès celsius en farenheit et inversement.  
+2. Créer une fonction permettant de convertir des degrès celsius en fahrenheit et inversement.  
    Des messages devront s'afficher en fonction de la température (Celle en Celsius :)).
    - En dessous de 0 : Il fait très froid.
    - Entre 0 et 14 degrès : C'est le nooord.
