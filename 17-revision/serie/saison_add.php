@@ -11,16 +11,14 @@ require(__DIR__.'/partials/header.php');
             $cover = null;
             $synopsis = null;
             $released_at = null;
-            $errors = [];
 
 
             // détecter quand le formulaire est soumis
             if (!empty($_POST)) { // Si le formulaire est soumis
                 $title = str_replace(' ', '', trim(strip_tags($_POST['title'])));
                 $category = str_replace(' ', '', trim(strip_tags($_POST['category'])));
-                $cover = trim(strip_tags($_POST['cover']));
                 $synopsis = str_replace(' ', '', trim(strip_tags($_POST['synopsis'])));
-                $date = $_POST['released_at'];
+                $released_at = $_POST['released_at'];
 
                 // raccourcie avec l'interpolation des variables
                 foreach ($_POST as $key => $field) {
@@ -32,41 +30,31 @@ require(__DIR__.'/partials/header.php');
                 $image = $_FILES['cover'];
              }
     
-             var_dump($_POST);
+
             // Détecter quand le formulaire est soumis
             // On peut aussi utilise $_SERVER
             if (!empty($_POST)) {
             // définir un tableau d'erreur vide qui va se remplir après chaque erreur
                 $errors = [];
                 // $name doit faire au moins 3 caractères
-                if (strlen($title) < 1) {
+                if (strlen($title) < 3) {
                     $errors['title'] = "Le titre n\'est pas valide";
                 }
 
-                if (strlen($category) < 1) {
+                if (strlen($category) < 3) {
                     $errors['category'] = "La catégorie n\'est pas valide";
                 }
 
-                if (strlen($synopsis) < 1) {
+                if (strlen($synopsis) < 3) {
                     $errors['synopsis'] = "Le synopsis n\'est pas valide";
                 }
                
-                if (strlen($date) == 0) {
-                     $errors['date'] = "La date est obligatoire";
+                if (strlen($released_at) == 0) {
+                     $errors['released_at'] = "La date est obligatoire";
                 }
 
-                if (!strtotime($date)) {
-                    $errors['date'] = "La date n\'est pas valide";
-                }
-
-                if (strtotime($date)) {
-                    $month = date('n', strtotime($date));
-                    $day = date('j', strtotime($date));
-                    $year = date('Y', strtotime($date));
-
-                    if(!checkdate(date($month, $day, $year))) {
-                        $errors['date'] = "La date n\'est pas valide";
-                    }
+                if (!strtotime($released_at)) {
+                    $errors['released_at'] = "La date n\'est pas valide";
                 }
 
                // var_dump(checkdate($mois,$jour,$annee));
@@ -100,9 +88,9 @@ require(__DIR__.'/partials/header.php');
 
                     $query->bindValue(':title', $title, PDO::PARAM_STR);
                     $query->bindValue(':category', $category, PDO::PARAM_STR);
-                    $query->bindValue(':cover', $cover, PDO::PARAM_STR);
+                    $query->bindValue(':cover', null, PDO::PARAM_STR);
                     $query->bindValue(':synopsis', $synopsis, PDO::PARAM_STR);
-                    $query->bindValue(':released_at', $date, PDO::PARAM_STR);
+                    $query->bindValue(':released_at', $released_at, PDO::PARAM_STR);
 
                     if ($query->execute()) { // On insère la série dans la BDD
                         // Retourne l'emplacement temporaire du fichier
@@ -139,7 +127,7 @@ require(__DIR__.'/partials/header.php');
         <form action="" method="post" enctype="multipart/form-data">
             <?php
 
-                $fields = ['title' => 'Titre', 'category' => 'Catégorie', 'synopsis' => 'Synopsis']; // Les champs du formulaire à afficher
+                $fields = ['title' => 'Titre', 'category' => 'Catégorie', 'synopsis' => 'Synopsis', 'released_at' => 'Date AAAA-MM-JJ']; // Les champs du formulaire à afficher
                 foreach ($fields as $field => $label) { ?>
                     <div class="form-group">
                         <label for="<?php echo $field; ?>"><?php echo $label; ?> :</label>
@@ -154,12 +142,6 @@ require(__DIR__.'/partials/header.php');
                 <?php
                 }
                 ?>
-
-                    <div class="form-group">
-                        <label for="date">Date :</label>
-                        <input type="date" name="date" />
-                        <?php echo $errors['date'] ?? ''; ?>
-                    </div>
                     <!-- <div class="form-group">
                         <label for="cover">Cover :</label>
                         <input type="text" name="cover" id="cover" class="form control valid" value="<?php echo $cover; ?>">

@@ -12,7 +12,7 @@ define('DB', 'tvshow');
 try { // Essaye le code
     $db = new PDO('mysql:host='.HOST.';dbname='.DB.';charset=utf8', USER, PASS, 
     [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-     PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING // active les errurs SQL
+     PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING // active les erreurs SQL
     ]);
 
     // permettre de compter le nombre de requêtes faites sur la page

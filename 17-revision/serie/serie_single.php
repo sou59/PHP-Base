@@ -3,7 +3,7 @@ require(__DIR__.'/partials/header.php');
 
 
     
-    $serie = serieExists($_GET['id']);
+   $serie = serieExists($_GET['id']);
     // si l
     if(empty($_GET['id']) || !$serie){
         header('HTTP/1.0 404 Not Found');
@@ -12,6 +12,12 @@ require(__DIR__.'/partials/header.php');
         exit();
     }
 
+    // if(empty($_GET['id']) || !$serie = serieExists($_GET['id'])){
+    //     http_response_code(404);
+    //     exit();
+    // }
+    //var_dump($serie);
+
     ?>
 
     <div class="container pt-5">
@@ -19,7 +25,7 @@ require(__DIR__.'/partials/header.php');
         <ul class="list-unstyled">
             <li><strong>Catégory :</strong> <?php echo $serie['category']; ?></li>
             <li><strong>Synopsis :</strong> <?php echo $serie['synopsis']; ?></li>
-            <li><strong>Date de sortie :</strong> <?php echo $serie['released_at']; ?></li>
+            <li><strong>Date de sortie :</strong> <?php echo date('d/m/Y', strtotime($serie['released_at'])); ?></li>
             <li><strong>Couverture :</strong><?php echo '<img class="cover-img d-block card-img-top" src="'.$serie['cover'].'" />'; ?></li>
             <li>
                 <div class="modifform">

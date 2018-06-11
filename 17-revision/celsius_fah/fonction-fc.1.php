@@ -56,19 +56,15 @@
               $fah = $temp * 1.8 + 32;
               $cel = ($temp - 32) / 1.8;
 
-              if($cel<0) {
+              if($cel < 0) {
                 $mesg = 'Il fait très chaud.';
-              }
-              elseif ($cel>0 || $cel<14){
+              } elseif ($cel > 0 && $cel < 14) {
                 $mesg = 'C\'est le nooord.';
-              }
-              elseif ($cel>=15 || $cel<=25){
+              } elseif ($cel >= 15 || $cel <= 25) {
                 $mesg = 'Il fait bon.';
-              }
-              elseif ($cel>25){
+              } else {
                 $mesg = 'Il fait trop chaud.';
               }
-              
 
               if ($degree == 'F') {
                 return $mesg. ' ' .$temp.'&deg;C équivaut à '.$fah.'&deg;F';

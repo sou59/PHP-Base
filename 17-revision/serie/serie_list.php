@@ -5,7 +5,7 @@ require(__DIR__.'/partials/header.php');
     <h1>La liste des séries</h1>
 
         <?php 
-$query = $db->query('SELECT * FROM showtv');
+$query = $db->query('SELECT * FROM showtv ORDER BY released_at ASC');
 // Récupére toutes les séries
 $series = $query->fetchAll();
  //var_dump($series);
