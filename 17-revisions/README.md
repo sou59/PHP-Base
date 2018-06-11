@@ -8,7 +8,7 @@
    Zacharie LaGrande, 27 février 1990, 80090 AMIENS, 03.02.52.82.94  
    Aubrey Bourassa, 14 novembre 1982, 33800 BORDEAUX, 05.55.59.61.44
 
-   La date doit être stockée dans le tableau sous la forme d'un timestamp.  
+   La date doit être stockée dans le tableau sous la forme d'un timestamp.
    Nous voulons ce rendu final pour chacun des contacts :
    Auguste Fréchette est né le 30 novembre 1942, il a 75 ans. Il habite à Meudon (92190). Il est joignable au 01 22 88 26 88
 
