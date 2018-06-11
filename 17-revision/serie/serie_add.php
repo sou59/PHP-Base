@@ -16,11 +16,11 @@ require(__DIR__.'/partials/header.php');
 
             // détecter quand le formulaire est soumis
             if (!empty($_POST)) { // Si le formulaire est soumis
-                $title = str_replace(' ', '', trim(strip_tags($_POST['title'])));
-                $category = str_replace(' ', '', trim(strip_tags($_POST['category'])));
+                $title = trim(strip_tags($_POST['title']));
+                $category = trim(strip_tags($_POST['category']));
                 $cover = trim(strip_tags($_POST['cover']));
-                $synopsis = str_replace(' ', '', trim(strip_tags($_POST['synopsis'])));
-                $date = $_POST['released_at'];
+                $synopsis = trim(strip_tags($_POST['synopsis']));
+                $date = trim(strip_tags($_POST['released_at']));
 
                 // raccourcie avec l'interpolation des variables
                 foreach ($_POST as $key => $field) {
@@ -43,11 +43,11 @@ require(__DIR__.'/partials/header.php');
                     $errors['title'] = "Le titre n\'est pas valide";
                 }
 
-                if (strlen($category) < 1) {
+                if (strlen($category) < 3) {
                     $errors['category'] = "La catégorie n\'est pas valide";
                 }
 
-                if (strlen($synopsis) < 1) {
+                if (strlen($synopsis) < 3) {
                     $errors['synopsis'] = "Le synopsis n\'est pas valide";
                 }
                
@@ -59,15 +59,15 @@ require(__DIR__.'/partials/header.php');
                     $errors['date'] = "La date n\'est pas valide";
                 }
 
-                if (strtotime($date)) {
-                    $month = date('n', strtotime($date));
-                    $day = date('j', strtotime($date));
-                    $year = date('Y', strtotime($date));
-
-                    if(!checkdate(date($month, $day, $year))) {
-                        $errors['date'] = "La date n\'est pas valide";
+                if (strtotime($date)) { // Si date valide, on vérifie qu'elle existe
+                    $month = date('n', strtotime($date)); // 2 -> février
+                    $day = date('j', strtotime($date)); // 29
+                    $year = date('Y', strtotime($date)); // 2001
+                    if (!checkdate($month, $day, $year)) {
+                        $errors['date'] = 'La date n\'est pas valide.';
                     }
                 }
+            
 
                // var_dump(checkdate($mois,$jour,$annee));
                 var_dump(strtotime('2016-05-12'));
@@ -156,21 +156,33 @@ require(__DIR__.'/partials/header.php');
                 ?>
 
                     <div class="form-group">
-                        <label for="date">Date :</label>
-                        <input type="date" name="date" />
+                    <label for="released_at">Date YYYY-MM-DD</label>
+                    <input type="date" name="released_at" id="released_at" class="form-control <?php echo isset($errors[$field]) ? 'is-invalid' : null; ?>">
                         <?php echo $errors['date'] ?? ''; ?>
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="cover">Cover :</label>
-                        <input type="text" name="cover" id="cover" class="form control valid" value="<?php echo $cover; ?>">
-                    </div>     -->
-                            <!-- La balise input type="file" permet de
+
+                    <!-- La balise input type="file" permet de
                     sélectionner un fichier sur son ordinateur.
                     Ne pas oublier l'attribut "name"-->
                     <div class="form-group">
                         <label for="cover">Couverture :</label>
                     <input type="file" name="cover" />
+                    <?php echo $errors['cover'] ?? ''; ?>
                     </div>
+
+                    <div class="form-group">
+                    <label for="type">Type :</label>
+                    <input type="text" id="saison" list="types" name="saison" class="form-control" value="<?php echo $type; ?>">
+                    <datalist id="types">
+                        <select>
+                            <option value="Saison - 1"></option>
+                            <option value="Saison - 2"></option>
+                            <option value="Saison - 3"></option>
+                            <option value="Saison - 4"></option>
+                        </select>
+                    </datalist>
+                    </div>
+        </div>
 
             <button class="btn btn-primary">Ajouter la série</button>
 
