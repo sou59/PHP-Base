@@ -99,8 +99,7 @@ require(__DIR__.'/partials/header.php');
                     $query->bindValue(':video', $video, PDO::PARAM_STR);
                     $query->execute();
                                     
-                    echo '<div class="alerte alert-sucess">La série a bien été ajoutée</div>';
-                
+                    echo '<div class="alerte alert-sucess">La série a bien été ajoutée</div>';    
                 }
                
                // var_dump($errors);
@@ -136,12 +135,33 @@ require(__DIR__.'/partials/header.php');
                         <label for="category">Catégorie :</label>
                         <select class="form-control <?php echo isset($errors['category']) ? 'is-invalid' : null; ?>" id="category" name="category">
                             <option hidden value="">Choisissez votre catégorie</option>
-                            <option <?php if ($category == 'Action') { echo 'selected'; } ?> value="Action">Action</option>
-                            <option <?php echo ($category == 'Science fiction') ? 'selected' : ''; ?> value="Science fiction">Science fiction</option>
-                            <option <?php if ($category == 'Comédie') { echo 'selected'; } ?> value="Comédie">Comédie</option>
-                            <option <?php if ($category == 'Humour') { echo 'selected'; } ?> value="Humour">Humour</option>
-                        </select>
+                       
+        <?php
+                            
+ $sql = "SELECT COLUMN_TYPE 
+ FROM information_schema.`COLUMNS` 
+ WHERE TABLE_NAME = 'movies' 
+       AND COLUMN_NAME = 'category'";
+ $stmt = $db->prepare( $sql );
+ $stmt->execute();
+ $result = $stmt->fetchColumn();
 
+ // preg_match_all( '\/(["\'])([^"\']+)\1/', $result, $matches );
+
+ foreach ( $result as $enum )
+ {
+    ?><option <?php echo $enum. '<br\>'; ?></option>
+  <?php  
+ }
+?>
+                        </select>
+                     
+<?php
+$category = $db->prepare("SELECT * FROM movie WHERE rank = '4'");
+while ($cat = $category->fetchAll()){
+echo $cat['category'];
+}
+?>
                     </div>
 
                     <div class="form-group">
@@ -159,10 +179,14 @@ require(__DIR__.'/partials/header.php');
                         <label for="year_of_prod">Date YYYY :</label>
                         <select class="form-control <?php echo isset($errors['year_of_prod']) ? 'is-invalid' : null; ?>" id="year_of_prod" name="year_of_prod">
                             <option hidden value="">Choisissez votre date</option>
-                            <option <?php if ($year_of_prod == '2010') { echo 'selected'; } ?> value="2010">2010</option>
-                            <option <?php echo ($year_of_prod == '2000') ? 'selected' : ''; ?> value="2000">2000</option>
-                            <option <?php if ($year_of_prod == '1995') { echo 'selected'; } ?> value="1995">1995</option>
-                            <option <?php if ($year_of_prod == '1990') { echo 'selected'; } ?> value="1990">1990</option>
+                            <?php
+                            for ($i = 2000; $i < 2020; $i++) { 
+                                
+                                ?> 
+                                <option <?php echo $i; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php
+                            }
+                            ?>
                         </select>
                     </div>     
                     
