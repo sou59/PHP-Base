@@ -11,6 +11,7 @@ require(__DIR__.'/partials/header.php');
             $cover = null;
             $synopsis = null;
             $released_at = null;
+            $saison = null;
             $errors = [];
 
 
@@ -21,6 +22,7 @@ require(__DIR__.'/partials/header.php');
                 $cover = trim(strip_tags($_POST['cover']));
                 $synopsis = trim(strip_tags($_POST['synopsis']));
                 $date = trim(strip_tags($_POST['released_at']));
+                $saison = $_POST['saison'];
 
                 // raccourcie avec l'interpolation des variables
                 foreach ($_POST as $key => $field) {
@@ -67,7 +69,20 @@ require(__DIR__.'/partials/header.php');
                         $errors['date'] = 'La date n\'est pas valide.';
                     }
                 }
-            
+                
+                // Vérifie que la marque existe
+                $saison_id = intval(substr($saison, -1));
+                
+                // Requête pour aller chercher la marque en BDD
+                $query = $db->prepare('SELECT * FROM saison WHERE id = :id');
+                $query->bindValue(':id', $saison_id, PDO::PARAM_INT);
+                $query->execute();
+                $brand = $query->fetch();
+
+                if (!$saison) {
+                    $errors['saison'] = 'Indiquer une saison.';
+                }
+                
 
                // var_dump(checkdate($mois,$jour,$annee));
                 var_dump(strtotime('2016-05-12'));
@@ -95,14 +110,15 @@ require(__DIR__.'/partials/header.php');
                 // S'il n'y a pas d'erreurs dans le formulaire
                 if (empty($errors)) {
 
-                    $query = $db->prepare('INSERT INTO showtv (title, category, cover, synopsis, released_at) 
-                    VALUES (:title, :category, :cover, :synopsis, :released_at)');
+                    $query = $db->prepare('INSERT INTO showtv (title, category, cover, synopsis, released_at, saison_id) 
+                    VALUES (:title, :category, :cover, :synopsis, :released_at, :saison_id');
 
                     $query->bindValue(':title', $title, PDO::PARAM_STR);
                     $query->bindValue(':category', $category, PDO::PARAM_STR);
                     $query->bindValue(':cover', $cover, PDO::PARAM_STR);
                     $query->bindValue(':synopsis', $synopsis, PDO::PARAM_STR);
                     $query->bindValue(':released_at', $date, PDO::PARAM_STR);
+                    $query->bindValue(':saison_id', $saison_id, PDO::PARAM_INT);
 
                     if ($query->execute()) { // On insère la série dans la BDD
                         // Retourne l'emplacement temporaire du fichier
@@ -171,17 +187,18 @@ require(__DIR__.'/partials/header.php');
                     </div>
 
                     <div class="form-group">
-                    <label for="type">Type :</label>
-                    <input type="text" id="saison" list="types" name="saison" class="form-control" value="<?php echo $type; ?>">
-                    <datalist id="types">
+                    <label for="saison">Saison :</label>
+                    <input type="text" id="saison" list="saisons" name="saison" class="form-control" value="<?php echo $saison; ?>">
+                    <datalist id="saisons">
                         <select>
                             <option value="Saison - 1"></option>
                             <option value="Saison - 2"></option>
                             <option value="Saison - 3"></option>
                             <option value="Saison - 4"></option>
+                            <option value="Saison - 5"></option>
                         </select>
                     </datalist>
-                    </div>
+        </div>
         </div>
 
             <button class="btn btn-primary">Ajouter la série</button>

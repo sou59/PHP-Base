@@ -104,7 +104,7 @@
                 // Alternative calcul age
                 $dateToday = new DateTime();
                 $dateAnniv = new DateTime('13 march 1969');
-                echo $dateAnniv->modify('+1 year')->format('l d/m/y');
+                echo $dateAnniv->format('l d/m/y');
                 var_dump($dateAnniv->diff($dateToday)->y); // on récupèrent uniquemnt l'année
 
                 echo '<br \>';
